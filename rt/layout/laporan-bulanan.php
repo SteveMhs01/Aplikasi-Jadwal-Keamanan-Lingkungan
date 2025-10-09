@@ -9,14 +9,16 @@
   <meta name="author" content="" />
   <title>Dashboard</title>
   <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
-  <link href="../css/styles.css" rel="stylesheet" />
+  <link href="../../css/styles.css" rel="stylesheet" />
+  <link rel="stylesheet" href="sweetalert/sweetalert2.css">
   <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+
 </head>
 
 <body class="sb-nav-fixed">
   <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3" href="dashboard-rt.php">
+    <a class="navbar-brand ps-3" href="#">
       <h3 class="mt-3">Dashboard</h3>
     </a>
     <!-- Sidebar Toggle-->
@@ -33,11 +35,15 @@
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-          <li class="dropdown-item">
-            <a class="fa-solid fa-gear me-2"></a>Settings
+          <li>
+            <a class="dropdown-item" href="layout/settings.php">
+              <i class="fas fa-gear me-2"></i>Settings
+            </a>
           </li>
-          <li class="dropdown-item">
-            <a class="fa-solid fa-right-from-bracket me-2" onclick="window.location.href = '../login.php'"></a>Log-out
+          <li>
+            <a class="dropdown-item" href="../../login.php" id="logout">
+              <i class="fas fa-sign-out-alt me-2"></i>Logout
+            </a>
           </li>
         </ul>
       </li>
@@ -49,33 +55,41 @@
         <div class="sb-sidenav-menu">
           <div class="nav">
             <div class="sb-sidenav-menu-heading"></div>
-            <a class="nav-link mt-4" href="index.html">
-              <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt me-2"></i></div>
+            <a class="nav-link mt-4" href="../dashboard-rt.php">
+              <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
               Dashboard
             </a>
             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-              <div class="sb-nav-link-icon"><i class="fa-solid fa-book-open"></i></div>
-              Laporan
+              <div class="sb-nav-link-icon"><i class="fa-solid fa-user"></i></div>
+              Kelola Akun
               <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
             </a>
             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
               <nav class="sb-sidenav-menu-nested nav">
-                <a class="nav-link" href="layout-static.html">Laporan Kehadiran</a>
-                <a class="nav-link" href="layout-sidenav-light.html">Laporan Bulanan</a>
+                <a class="nav-link" href="kelola-akun-sekuriti.php">Akun Sekuriti</a>
+                <a class="nav-link" href="kelola-akun-warga.php">Akun Warga</a>
               </nav>
             </div>
-            <a class="nav-link" href="charts.html">
-              <div class="sb-nav-link-icon"><i class="fa-solid fa-user-gear me-1"></i></div>
-              Kelola Akun
-            </a>
-            <a class="nav-link" href="charts.html">
-              <div class="sb-nav-link-icon"><i class="fa-solid fa-calendar-week me-2"></i></div>
+            <a class="nav-link" href="kelola-jadwal.php">
+              <div class="sb-nav-link-icon"><i class="fa-solid fa-calendar-week"></i></div>
               Kelola Jadwal
             </a>
-            <a class="nav-link" href="../login.php">
-              <div class="sb-nav-link-icon"><i class="fas fa-table me-1"></i></div>
+            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+              <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
+              Laporan
+              <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+            </a>
+            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+              <nav class="sb-sidenav-menu-nested nav">
+                <a class="nav-link" href="laporan-kehadiran.php">Laporan Kehadiran</a>
+                <a class="nav-link" href="laporan-bulanan.php">Laporan Bulanan</a>
+              </nav>
+            </div>
+            <a class="nav-link" href="pengaduan.php">
+              <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
               Pengaduan
             </a>
+
           </div>
         </div>
       </nav>
@@ -83,60 +97,32 @@
     <div id="layoutSidenav_content">
       <main>
         <div class="container-fluid px-4">
-          <h1 class="mt-4 mb-4">Dashboard RT</h1>
-          <div class="row">
-            <div class="col-xl-6">
-              <div class="card mb-4">
-                <div class="card-header">
-                  <i class="fas fa-chart-area me-1"></i>
-                  Area Chart Example
-                </div>
-                <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
-              </div>
-            </div>
-            <div class="col-xl-6">
-              <div class="card mb-4">
-                <div class="card-header">
-                  <i class="fas fa-chart-bar me-1"></i>
-                  Bar Chart Example
-                </div>
-                <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
-              </div>
-            </div>
+          <h1 class="mt-4 mb-4">Laporan Bulanan</h1>
+          <div class="container">
+            <a href="" class="btn btn-success mb-3"><i class="fa-solid fa-plus me-2"></i>Tambah</a>
+            <table class="table table-striped table-hover-mt5">
+              <thead class="table-dark">
+                <th>ID</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Nama</th>
+                <th>Nik</th>
+                <th>No hp</th>
+                <th>Aksi</th>
+              </thead>
+            </table>
           </div>
-          <div class="card mb-4">
-            <div class="card-header">
-              <i class="fas fa-table me-1"></i>
-              DataTable Example
-            </div>
-            <div class="card-body">
-              <table id="datatablesSimple">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Position</th>
-                    <th>Office</th>
-                    <th>Age</th>
-                    <th>Start date</th>
-                    <th>Salary</th>
-                  </tr>
-                </thead>
-                <tbody>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
       </main>
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-  <script src="../js/scripts.js"></script>
+  <script src="../../js/scripts.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
   <script src="assets/demo/chart-area-demo.js"></script>
   <script src="assets/demo/chart-bar-demo.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
   <script src="js/datatables-simple-demo.js"></script>
+  <script type="text/javascript" src="../sweetalert/sweetalert2.all.min.js"></script>
 </body>
 
 </html>
