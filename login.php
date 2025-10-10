@@ -12,15 +12,17 @@ session_start();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="/">
   <link rel="icon" href="style/picture/LOGO_Prod_TRPL_Variant_13_Square Black Line.jpg">
-  <link rel="stylesheet" href="style/bootstrap-5.3.8-dist/css/bootstrap.css">
-  <link rel="stylesheet" href="style/fontawesome-free-7.0.1-web/css/all.min.css">
-  <link rel="stylesheet" href="style/sweetalert/sweetalert2.css">
+  <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="./css/styles.css">
+  <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="sweetalert/sweetalert2.css">
 
   <title>Login</title>
 </head>
 
-<body class="row align-items-center" style="height: 95vh; width: 100%;">
+<body class="row align-items-center" style="width: 100%; height: 100vh;">
   <form action="login.php" method="POST" id="block1" class="border border-2 p-3 rounded d-grid mx-auto shadow-lg" style="width: 307px;">
+
     <div class="mb-3">
       <label for="username">
         <i class="fa-solid fa-users" style="width: 70px; height: 100px; margin-left: 100px;"></i>
@@ -33,12 +35,20 @@ session_start();
     <div class="mb-3">
       <input type="password" name="password" placeholder="Password" id="password" class="form-control" required>
     </div>
-    <button type="submit" name="login" id="btn" class="btn btn-success rounded-pill">Sign-in</button>
+    <div class="d-flex align-items-center justify-content-between mt-1 mb-3">
+      <a class="small" href="#">Forgot Password?</a>
+    </div>
+    <button type="submit" name="login" id="btn" class="btn btn-success rounded-pill">Log-in</button>
   </form>
 
-  <script type="text/javascript" src="./style/sweetalert/sweetalert2.all.min.js"></script>
-  <script type="text/javascript" src="style/bootstrap-5.3.8-dist/js/bootstrap.js"></script>
-  <script type="text/javascript" src="style/fontawesome-free-7.0.1-web/js/all.min.js"></script>
+  <script type="text/javascript" src="sweetalert/sweetalert2.all.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  <script src="../js/scripts.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+  <script src="assets/demo/chart-area-demo.js"></script>
+  <script src="assets/demo/chart-bar-demo.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+  <script src="js/datatables-simple-demo.js"></script>
 </body>
 <?php
 
@@ -57,20 +67,19 @@ if (isset($_POST['login'])) {
   if ($result->num_rows > 0) {
     $data = $result->fetch_assoc();
     $_SESSION['username'] = $username;
-    header("location: dashboard/dashboard-rt.php");
+    header("location: rt/dashboard-rt.php");
   } elseif ($result2->num_rows > 0) {
     $data = $result2->fetch_assoc();
     $_SESSION['username'] = $username;
-    header("location: dashboard/dashboard-warga.php");
+    header("location: warga/dashboard-warga.php");
   } elseif ($result3->num_rows > 0) {
     $data = $result3->fetch_assoc();
     $_SESSION['username'] = $username;
-    header("location: dashboard/dashboard-sekuriti.php");
+    header("location: sekuriti/dashboard-sekuriti.php");
     exit;
   } else {
 ?>
-    <script
-      script type="text/javascript">
+    <script type="text/javascript">
       Swal.fire({
         icon: 'error',
         title: 'Login Failed',
