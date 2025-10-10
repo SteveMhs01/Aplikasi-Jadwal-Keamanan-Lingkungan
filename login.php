@@ -20,21 +20,7 @@ session_start();
   <title>Login</title>
 </head>
 
-<body class="row align-items-center" style="height: 95vh; width: 100%;">
-  <nav class="sb-topnav navbar">
-    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-
-    </form>
-    <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-      <li>
-        <a class="dropdown-item" href="../login.php" id="logout">
-          <i class="fas fa-sign-out-alt me-2"></i>Logout
-        </a>
-      </li>
-
-    </ul>
-  </nav>
-
+<body class="row align-items-center" style="width: 100%; height: 100vh;">
   <form action="login.php" method="POST" id="block1" class="border border-2 p-3 rounded d-grid mx-auto shadow-lg" style="width: 307px;">
 
     <div class="mb-3">
