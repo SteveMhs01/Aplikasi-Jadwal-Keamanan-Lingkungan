@@ -82,9 +82,9 @@ if (isset($_POST['login'])) {
     <script type="text/javascript">
       Swal.fire({
         icon: 'error',
-        title: 'Login Failed',
+        title: 'Login Gagal',
         confirmButtonColor: '#2fd43cff',
-        confirmButtonText: 'Try Again'
+        confirmButtonText: 'Coba Lagi'
       });
     </script>
 <?php
