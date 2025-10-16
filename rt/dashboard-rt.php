@@ -15,16 +15,16 @@
 
 </head>
 
-<body class="sb-nav-fixed" style="background-color: #f8f0f0ff;">
+<body class="sb-nav-fixed" style="background-color: #f8f0f0ff; ">
   <?php
-  include 'sideandnav/navbar.php';
+  
   include 'sideandnav/sidebar.php';
   ?>
   <div id="layoutSidenav">
     <div id="layoutSidenav_content">
-      <main>
+      <main class="p-4">
         <div class="container-fluid px-4">
-          <h1 class="mt-5 mb-5 ">Dashboard</h1>
+          <h1 class="mb-5 ">Dashboard</h1>
           <div class="row">
             <div class="col-xl-3 col-md-6">
               <div class="card mb-4">
@@ -48,7 +48,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-xl-6">
+            <div class="col-xl-6 ">
               <div class="card mb-4 shadow">
                 <div class="card-header">
                   <i class="fas fa-chart-area me-1"></i>
@@ -64,6 +64,15 @@
                   Grafik
                 </div>
                 <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
+              </div>
+            </div>
+            <div class="col-xl-6 ms-auto">
+              <div class="card mb-4 shadow">
+                <div class="card-header">
+                  <i class="fa-solid fa-chart-simple me-1"></i>
+                  Grafik
+                </div>
+                <div class="card-body"><canvas id="myPieChart" width="100%" height="50"></canvas></div>
               </div>
             </div>
           </div>
@@ -92,6 +101,7 @@
   <script src="../js/scripts.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
   <script src="../assets/demo/chart-bar-demo.js"></script>
+  <script src="../assets/demo/chart-pie-demo.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
   <script type="text/javascript" src="../sweetalert/sweetalert2.all.min.js"></script>
 </body>
