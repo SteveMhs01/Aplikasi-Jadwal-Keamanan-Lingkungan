@@ -38,7 +38,7 @@
                     <th>Password</th>
                     <th>Nik</th>
                     <th>No Hp</th>
-                    <th>Aksi</th>
+                    <th class="col-2">Aksi</th>
                   </tr>
                   <tr>
                     <td>1</td>
@@ -47,10 +47,10 @@
                     <td>test</td>
                     <td>2171100505059001</td>
                     <td>test</td>
-                    <td>
-                      <button type="submit" name="edit" id="edit" class="btn btn-primary rounded-3" data-bs-toggle="modal" data-bs-target="#detailModal1"><i class="fa-solid fa-eye me-1"></i>LIHAT</button>
-                      <button type="submit" name="edit" id="edit" class="btn btn-warning rounded-3"><i class="fa-solid fa-tools me-1"></i>EDIT</button>
-                      <button type="reset" name="hapus" id="edit" class="btn btn-danger rounded-3"><i class="fa-solid fa-trash me-1"></i>HAPUS</button>
+                    <td class="d-flex gap-2">
+                      <button type="submit" name="edit" id="edit" class="btn btn-primary rounded-3 mb-2" data-bs-toggle="modal" data-bs-target="#detailModal1"><i class="fa-solid fa-eye me-1"></i>LIHAT</button>
+                      <button type="submit" name="edit" id="edit" class="btn btn-warning rounded-3 mb-2"><i class="fa-solid fa-tools me-1"></i>EDIT</button>
+                      <button type="reset" name="hapus" id="edit" class="btn btn-danger rounded-3 mb-2"><i class="fa-solid fa-trash me-1"></i>HAPUS</button>
                     </td>
                   </tr>
               </table>
