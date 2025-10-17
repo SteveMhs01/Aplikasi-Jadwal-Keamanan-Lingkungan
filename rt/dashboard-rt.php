@@ -17,7 +17,7 @@
 
 <body class="sb-nav-fixed" style="background-color: #f8f0f0ff; ">
   <?php
-  
+  include 'sideandnav/navbar.php';
   include 'sideandnav/sidebar.php';
   ?>
   <div id="layoutSidenav">
