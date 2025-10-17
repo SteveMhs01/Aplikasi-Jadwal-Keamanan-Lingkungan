@@ -68,11 +68,13 @@ if (isset($_POST['login'])) {
     $data = $result->fetch_assoc();
     $_SESSION['username'] = $username;
     header("location: rt/dashboard-rt.php");
-  } elseif ($result2->num_rows > 0) {
+  } 
+  if ($result2->num_rows > 0) {
     $data = $result2->fetch_assoc();
     $_SESSION['username'] = $username;
     header("location: warga/dashboard-warga.php");
-  } elseif ($result3->num_rows > 0) {
+  } 
+  if ($result3->num_rows > 0) {
     $data = $result3->fetch_assoc();
     $_SESSION['username'] = $username;
     header("location: sekuriti/dashboard-sekuriti.php");
