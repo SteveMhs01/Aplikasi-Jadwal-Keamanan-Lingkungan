@@ -11,9 +11,9 @@
             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
             Dashboard
           </a>
-          <a class="nav-link text-black" href="kelola-akun.php">
+          <a class="nav-link text-black" href="kelola-pengaduan.php">
             <div class="sb-nav-link-icon"><i class="fa-solid fa-user"></i></div>
-            Kelola Akun
+            Pengaduan Insiden
           </a>
           <a class="nav-link text-black" href="kelola-jadwal.php">
             <div class="sb-nav-link-icon"><i class="fa-solid fa-calendar-week"></i></div>
