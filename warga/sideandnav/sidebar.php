@@ -5,7 +5,7 @@
       <div class="sb-sidenav-menu">
         <div class="nav">
           <i class="fa-solid fa-user" style="height: 100px; "></i>
-          <h5 class="text-center mt-3">RT</h5>
+          <h5 class="text-center mt-3">Warga</h5>
           <hr class="me-2 ms-2">
           <a class="nav-link mt-1 text-black" href="dashboard-warga.php">
             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
