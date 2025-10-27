@@ -14,12 +14,12 @@
   <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
   <!-- data tables -->
   <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.bootstrap5.css">
-
+ 
 </head>
 
 <body class="sb-nav-fixed" style="background-color: #f8f0f0ff;">
   <?php
-  
+  include 'sideandnav/navbar.php';
   include 'sideandnav/sidebar.php';
   ?>
   <div id="layoutSidenav">
@@ -33,6 +33,7 @@
               <button onclick="window.location.href='tambah-jadwal.php'" class="btn btn-primary mb-4 rounded-3 mt-3">
                 <i class="fa-solid fa-plus me-2"></i>TAMBAH SEKURITI
               </button>
+              <div class="table-responsive">
               <table id="tabelSekuriti" class="table align-middle">
                 <thead>
                   <tr>
@@ -56,12 +57,13 @@
                     <td>test</td>
                     <td>2171100505059001</td>
                     <td>test</td>
-                    <td class="col-sm-3">
+                    <td>
                       <a href="" class="text-danger" id="hapusSekuriti<?= $no - 1 ?>"><i class="fa-solid fa-trash"></i></a>
                     </td>
                   </tr>
                 </tbody>
               </table>
+              </div>
             </div>
           </div>
 
@@ -70,6 +72,7 @@
               <button onclick="window.location.href='tambah-jadwal.php'" class="btn btn-primary mb-4 rounded-3 mt-3">
                 <i class="fa-solid fa-plus me-2"></i>TAMBAH WARGA
               </button>
+              <div class="table-responsive">
               <table id="tabelWarga" class="table align-middle">
                 <thead>
                   <tr>
@@ -97,13 +100,13 @@
                     <td>test</td>
                     <td>test</td>
                     <td>test</td>
-                    <td class="col-sm-3">
-                      
+                    <td>
                       <a href="" class="text-danger" id="hapusWarga<?= $no - 1 ?>"><i class="fa-solid fa-trash me-1"></i></a>
                     </td>
                   </tr>
                 </tbody>
               </table>
+              </div>
             </div>
           </div>
         </div>
