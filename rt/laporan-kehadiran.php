@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <meta name="description" content="" />
   <meta name="author" content="" />
-  <title>Dashboard</title>
+  <title>LAPORAN KEHADIRAN</title>
   <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
   <link href="../css/styles.css" rel="stylesheet" />
   <link rel="stylesheet" href="sweetalert/sweetalert2.css">
@@ -25,11 +25,6 @@
       <main class="p-4">
         <div class="container-fluid px-4">
           <h1 class="mb-4">Rekap Laporan Kehadiran</h1>
-          <div class="card shadow border-0">
-            <div class="card-body">
-
-            </div> 
-          </div>
           <div class="container mt-4">
             <div class="card shadow border-0">
               <div class="card-body">
@@ -43,6 +38,7 @@
                         <th>Status</th>
                         <th>Waktu Hadir</th>
                         <th>Keterangan</th>
+                        <th>lain lain</th>
                         <th class="text-center">Aksi</th>
                       </tr>
                     </thead>
@@ -53,7 +49,8 @@
                         <td><span class="badge bg-success-subtle text-success fw-semibold px-3 py-2 rounded-pill">Hadir</span></td>
                         <td><span class="badge bg-success-subtle text-success">19:05</span></td>
                         <td>Hadir tepat waktu</td>
-                        <td class="text-center"><button class="btn btn-primary btn-sm rounded-pill px-3">Edit</button></td>
+                        <td></td>
+                        <td class="text-center"><button class="btn btn-primary btn-sm rounded-pill px-3"><i class="fa-solid fa-pen"></i></button></td>
                       </tr>
                       <tr>
                         <td>2</td>
@@ -61,7 +58,8 @@
                         <td><span class="badge bg-success-subtle text-success fw-semibold px-3 py-2 rounded-pill">Hadir</span></td>
                         <td><span class="badge bg-success-subtle text-success">19:25</span></td>
                         <td>Hadir</td>
-                        <td class="text-center"><button class="btn btn-primary btn-sm rounded-pill px-3">Edit</button></td>
+                        <td></td>
+                        <td class="text-center"><button class="btn btn-primary btn-sm rounded-pill px-3"><i class="fa-solid fa-pen"></i></button></td>
                       </tr>
                       <tr>
                         <td>3</td>
@@ -69,6 +67,7 @@
                         <td><span class="badge bg-danger-subtle text-danger fw-semibold px-3 py-2 rounded-pill">Tidak Hadir</span></td>
                         <td>-</td>
                         <td>Tidak Hadir</td>
+                        <td></td>
                         <td class="text-center"><button class="btn btn-primary btn-sm rounded-pill px-3"><i class="fa-solid fa-pen"></i></button></td>
                       </tr>
                       <tr>
@@ -77,7 +76,8 @@
                         <td><span class="badge bg-success-subtle text-success fw-semibold px-3 py-2 rounded-pill">Hadir</span></td>
                         <td><span class="badge bg-success-subtle text-success">18:00</span></td>
                         <td>Hadir tepat waktu</td>
-                        <td class="text-center"><button class="btn btn-primary btn-sm rounded-pill px-3">Edit</button></td>
+                        <td></td>
+                        <td class="text-center"><button class="btn btn-primary btn-sm rounded-pill px-3"><i class="fa-solid fa-pen"></i></button></td>
                       </tr>
                       <tr>
                         <td>5</td>
@@ -85,9 +85,10 @@
                         <td><span class="badge bg-secondary-subtle text-secondary fw-semibold px-3 py-2 rounded-pill">Belum Dilaporkan</span></td>
                         <td>-</td>
                         <td>Belum melapor</td>
-                        <td class="text-center"><button class="btn btn-primary btn-sm rounded-pill px-3">Edit</button></td>
+                        <td></td>
+                        <td class="text-center"><button class="btn btn-primary btn-sm rounded-pill px-3"><i class="fa-solid fa-pen"></i></button></td>
                       </tr>
-                    </tbody>
+                      </tbody>
                   </table>
                 </div>
               </div>

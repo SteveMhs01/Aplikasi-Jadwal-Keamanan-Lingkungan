@@ -1,10 +1,10 @@
 <div id="layoutSidenav">
   <div id="layoutSidenav_nav">
-    <nav class="sb-sidenav card shadow" style="height: 650px; border-radius: 30px; margin-top: 65px; margin-left: 10px;">
+    <nav class="sb-sidenav card shadow" style="height: 550px; border-radius: 30px; margin-top: 125px; margin-left: 10px;">
       <div class="sb-sidenav-menu">
         <div class="nav">
-          <i class="fa-solid fa-user" style="height: 100px; "></i>
-          <h5 class="text-center mt-3">RT</h5>
+          
+          <h5 class="text-center">RT</h5>
           <hr class="me-2 ms-2">
           <a class="nav-link mt-1 text-black" href="dashboard-rt.php">
             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
@@ -57,7 +57,7 @@
   document.getElementById("logout").addEventListener("click", function(event) {
     event.preventDefault();
     Swal.fire({
-      title: 'Konfirmasi Logout',
+      title: 'Konfirmasi Logo',
       text: "Apakah Anda yakin ingin logout?",
       icon: 'warning',
       showCancelButton: true,

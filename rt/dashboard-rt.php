@@ -11,42 +11,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <meta name="description" content="" />
   <meta name="author" content="" />
-  <title>Dashboard</title>
+  <title>Dashboard RT</title>
   <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
   <link href="../css/styles.css" rel="stylesheet" />
   <link rel="stylesheet" href="sweetalert/sweetalert2.css">
   <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-  <style>
-    .card {
-      border-radius: 12px;
-    }
-
-    .card-body {
-      padding: 1rem 1.25rem;
-    }
-  </style>
 </head>
 
-<body class="sb-nav-fixed" style="background-color: #f8f0f0ff; ">
+<body class="sb-nav-fixed" style="background-color: #f9f6f6; ">
   <?php
   include 'sideandnav/navbar.php';
   include 'sideandnav/sidebar.php';
   include '../connection/connection.php';
-  
+
   ?>
   <div id="layoutSidenav">
     <div id="layoutSidenav_content">
       <main class="p-4">
         <div class="container-fluid px-4">
           <h1 class="mb-4">Dashboard</h1>
-          <div class="card mb-4 shadow">
-            <div class="card-body rounded-3" style="background:linear-gradient(135deg, #667EEA, #764BA2); color:white;">
-              <h3>Selamat Datang</h3>
+          <div class="card mb-4 shadow text-white">
+            <div class="card-body rounded-3" style="background: linear-gradient(160deg, #0f1724 0%, #4c1d95 40%, #e66465 70%, #45d0b6 100%);">
+              <h3>Selamat Datang 😎</h3>
               <p>Informasi Keamanan Lingkungan</p>
             </div>
           </div>
           <div class="row g-3 mb-4">
-            <!-- Card 1 -->
+            <!-- Card Total Insiden -->
             <div class="col-xl-3 col-md-6">
               <div class="card shadow border-0">
                 <div class="card-body d-flex align-items-center">
@@ -61,7 +52,7 @@
               </div>
             </div>
 
-            <!-- Card 2 -->
+            <!-- Card Kehadiran Ronda -->
             <div class="col-xl-3 col-md-6">
               <div class="card shadow border-0">
                 <div class="card-body d-flex align-items-center">
@@ -76,7 +67,7 @@
               </div>
             </div>
 
-            <!-- Card 3 -->
+            <!-- Card Seluruh Warga -->
             <div class="col-xl-3 col-md-6">
               <div class="card shadow border-0">
                 <div class="card-body d-flex align-items-center">
@@ -91,7 +82,7 @@
               </div>
             </div>
 
-            <!-- Card 4 -->
+            <!-- Card Laporan Validasi -->
             <div class="col-xl-3 col-md-6">
               <div class="card shadow border-0">
                 <div class="card-body d-flex align-items-center">
@@ -107,52 +98,70 @@
             </div>
           </div>
 
-          <div class="row">
-            <div class="col-xl-6 ">
-              <div class="card mb-4 shadow">
-                <div class="card-body">
-                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur neque delectus provident est ex laboriosam accusantium harum. Ipsa nisi beatae laboriosam officia, sunt iusto ex obcaecati consequatur dicta reiciendis eligendi nulla est rem sit eum? Accusantium voluptatem quae unde eaque nisi, aut necessitatibus asperiores voluptates officiis eos cum velit optio voluptate tempore ad animi natus mollitia omnis dicta consectetur sit a sequi nulla quas! Molestiae ducimus repellendus a! Reiciendis quas quam et possimus officiis nostrum eligendi? Similique officiis nemo culpa impedit veritatis voluptates commodi odio pariatur ipsum quibusdam accusantium temporibus porro et suscipit, fugit molestias, necessitatibus itaque alias sed quam!</p>
-                </div>
+          <div class="">
+            <div class="card mb-4 shadow">
+              <div class="card-body">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur neque delectus provident est ex laboriosam accusantium harum. Ipsa nisi beatae laboriosam officia, sunt iusto ex obcaecati consequatur dicta reiciendis eligendi nulla est rem sit eum? Accusantium voluptatem quae unde eaque nisi, aut necessitatibus asperiores voluptates officiis eos cum velit optio voluptate tempore ad animi natus mollitia omnis dicta consectetur sit a sequi nulla quas! Molestiae ducimus repellendus a! Reiciendis quas quam et possimus officiis nostrum eligendi? Similique officiis nemo culpa impedit veritatis voluptates commodi odio pariatur ipsum quibusdam accusantium temporibus porro et suscipit, fugit molestias, necessitatibus itaque alias sed quam!</p>
               </div>
             </div>
+          </div>
+          <div class="card mb-4 shadow">
+            <div class="card-body">
+              <h5 class="mb-3">📋 Jadwal Jaga Hari Ini</h5>
+              <table class="table table-sm align-middle">
+                <thead class="table-light">
+                  <tr>
+                    <th>Nama</th>
+                    <th>Shift</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Aldo</td>
+                    <td>Malam (22:00 - 02:00)</td>
+                    <td><span class="badge text-success">Hadir</span></td>
+                  </tr>
+                  <tr>
+                    <td>Bima</td>
+                    <td>Malam (02:00 - 06:00)</td>
+                    <td><span class="badge text-success">Hadir</span></td>
+                  </tr>
+                  <tr>
+                    <td>Citra</td>
+                    <td>Sore (18:00 - 22:00)</td>
+                    <td><span class="badge text-danger">Tidak Hadir</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="row">
             <div class="col-xl-6">
               <div class="card mb-4 shadow">
                 <div class="card-body">
-                 <h6 class="mb-4"><i class="fas fa-chart-bar me-2"></i>Grafik</h6>
-                <canvas id="myBarChart" width="100%" height="40"></canvas></div>
+                  <h6 class="mb-4"><i class="fas fa-chart-bar me-2"></i>Grafik</h6>
+                  <canvas id="barChart" width="100%" height="50"></canvas>
+
+                </div>
               </div>
             </div>
             <div class="col-xl-6 ms-auto">
               <div class="card mb-4 shadow">
                 <div class="card-body">
                   <h6 class="mb-4"><i class="fas fa-chart-pie me-2"></i>Grafik</h6>
-                  <canvas id="myPieChart" width="100%" height="50"></canvas></div>
+                  <canvas id="pieChart" width="100%" height="20"></canvas>
+                </div>
               </div>
             </div>
           </div>
-          <div class="card mb-4 shadow">
-            
-            <div class="card-body">
-              <table id="datatablesSimple">
-                <thead>
-                  <tr>
-
-                  </tr>
-                </thead>
-                <tbody>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
       </main>
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
   <script src="../js/scripts.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-  <script src="../assets/demo/chart-bar-demo.js"></script>
-  <script src="../assets/demo/chart-pie-demo.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="../grafik/grafik-kehadiran.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
   <script type="text/javascript" src="../sweetalert/sweetalert2.all.min.js"></script>
 </body>

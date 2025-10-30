@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <meta name="description" content="" />
   <meta name="author" content="" />
-  <title>Dashboard</title>
+  <title>LAPORAN BULANAN</title>
   <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
   <link href="../css/styles.css" rel="stylesheet" />
   <link rel="stylesheet" href="sweetalert/sweetalert2.css">
@@ -54,7 +54,7 @@
                 </select>
               </div>
               <div class="col-md-3 text-end">
-                <button class="btn btn-primary">Terapkan Filter</button>
+                <button class="btn btn-outline-primary">Terapkan Filter</button>
                 <button class="btn btn-outline-secondary">Reset</button>
               </div>
             </div>
@@ -103,24 +103,9 @@
               </div>
             </div>
 
-            <!-- Grafik -->
-            <div class="row g-4">
-              <div class="col-md-8">
-                <div class="card p-3">
-                  <h6 class="fw-semibold mb-3">Insiden 6 Bulan Terakhir</h6>
-                  <canvas id="barChart" width="100%" height="40"></canvas>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="card p-3">
-                  <h6 class="fw-semibold mb-3">Distribusi Jenis Insiden</h6>
-                  <canvas id="pieChart" width="100%" height="87"></canvas>
-                </div>
-              </div>
-            </div>
-
+            
             <!-- Tabel -->
-            <div class="card mt-4 p-3">
+            <div class="card mb-4 p-3">
               <h6 class="fw-semibold mb-3">Data Insiden Terbaru</h6>
               <div class="table-responsive">
                 <table class="table align-middle">
@@ -135,24 +120,39 @@
                   <tbody>
                     <tr>
                       <td>15 Jan 2024</td>
-                      <td><span class="badge badge-soft-danger">Kriminal</span></td>
+                      <td><span class="badge badge-soft text-danger">Kriminal</span></td>
                       <td>Nama</td>
-                      <td><span class="badge badge-soft-success">Selesai</span></td>
+                      <td><span class="badge badge-soft text-success">Selesai</span></td>
                     </tr>
                     <tr>
                       <td>13 Jan 2024</td>
-                      <td><span class="badge badge-soft-primary">Laporan</span></td>
+                      <td><span class="badge badge-soft text-primary">Laporan</span></td>
                       <td>Nama</td>
-                      <td><span class="badge badge-soft-primary">Proses</span></td>
+                      <td><span class="badge badge-soft text-primary">Proses</span></td>
                     </tr>
                     <tr>
                       <td>12 Jan 2024</td>
-                      <td><span class="badge badge-soft-warning">Lainnya</span></td>
+                      <td><span class="badge badge-soft text-warning">Lainnya</span></td>
                       <td>Nama</td>
-                      <td><span class="badge badge-soft-warning">Pending</span></td>
+                      <td><span class="badge badge-soft text-warning">Pending</span></td>
                     </tr>
                   </tbody>
                 </table>
+              </div>
+            </div>
+            <!-- Grafik Laporan -->
+            <div class="row g-4">
+              <div class="col-md-8">
+                <div class="card p-3">
+                  <h6 class="fw-semibold mb-3">Insiden 6 Bulan Terakhir</h6>
+                  <canvas id="barChart" width="100%" height="40"></canvas>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card p-3">
+                  <h6 class="fw-semibold mb-3">Distribusi Jenis Insiden</h6>
+                  <canvas id="pieChart" width="100%" height="87"></canvas>
+                </div>
               </div>
             </div>
           </div>
@@ -162,9 +162,9 @@
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+  <script src="../js/scripts.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="../grafik/grafik-kehadiran.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
   <script type="text/javascript" src="../sweetalert/sweetalert2.all.min.js"></script>
 </body>
   
