@@ -16,31 +16,56 @@ session_start();
   <link rel="stylesheet" href="./css/styles.css">
   <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="sweetalert/sweetalert2.css">
+  <style>
+    body {
+      background-color: #f9f6f6;
+    }
 
+    .login-container {
+      max-width: 400px;
+      margin: auto;
+      margin-top: 165px;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    }
+
+    .login-container h2 {
+      margin-bottom: 20px;
+    }
+  </style>
   <title>Login</title>
 </head>
 
-<body class="row align-items-center" style="width: 100%; height: 100vh;">
-  <form action="login.php" method="POST" id="block1" class="border border-2 p-3 rounded d-grid mx-auto shadow-lg" style="width: 307px;">
-
-    <div class="mb-3">
-      <label for="username">
-        <i class="fa-solid fa-users" style="width: 70px; height: 100px; margin-left: 100px;"></i>
-        <h5 class="text-center">Aplikasi Keamanan Lingkungan</h5>
-    </div>
-    <div class="mb-3">
-      <input type="text" name="username" placeholder="Username" id="username" class="form-control" required>
-      </label>
-    </div>
-    <div class="mb-3">
-      <input type="password" name="password" placeholder="Password" id="password" class="form-control" required>
-    </div>
-    <div class="d-flex align-items-center justify-content-between mt-1 mb-3">
-      <a class="small" href="#">Forgot Password?</a>
-    </div>
-    <button type="submit" name="login" id="btn" class="btn btn-success rounded-pill">Log-in</button>
-  </form>
-
+<body>
+  <div class="login-container">
+    <h2 class="text-center">Login</h2>
+    <form id="loginForm" method="POST">
+      <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <div class="input-group">
+          <span class="input-group-text bg-white"><i class="fas fa-user"></i></span>
+          <input type="text" class="form-control" id="username" name="username" placeholder="Masukkan username" required>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <div class="input-group">
+          <span class="input-group-text bg-white"><i class="fas fa-lock"></i></span>
+          <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan password" required>
+        </div>
+      </div>
+      <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="rememberMe">
+        <label class="form-check-label" for="rememberMe">Ingat Saya</label>
+      </div>
+      <button type="submit" class="btn btn-outline-success w-100" name="login"><i class="fas fa-sign-in-alt me-1"></i>Login</button>
+    </form>
+    <p class="text-center mt-3">
+      <a href="#" class="link-primary">Lupa Password?</a>
+    </p>
+  </div>
   <script type="text/javascript" src="sweetalert/sweetalert2.all.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
   <script src="../js/scripts.js"></script>
@@ -51,46 +76,56 @@ session_start();
   <script src="js/datatables-simple-demo.js"></script>
 </body>
 <?php
-
+// proses login
 if (isset($_POST['login'])) {
   $username = $_POST['username'];
   $password = $_POST['password'];
 
-  $sql = "SELECT * FROM tb_rt WHERE username = '$username' AND password = '$password' ";
-  $sql2 = "SELECT * FROM tb_warga WHERE username = '$username' AND password = '$password' ";
-  $sql3 = "SELECT * FROM tb_sekuriti WHERE username = '$username' AND password = '$password' ";
+  // tabel => path dashboard (urutan tetap: rt, warga, sekuriti)
+  $checks = [
+    'tb_rt'       => 'rt/dashboard-rt.php',
+    'tb_warga'    => 'warga/dashboard-warga.php',
+    'tb_sekuriti' => 'sekuriti/dashboard-sekuriti.php'
+  ];
 
-  $result = $db->query($sql);
-  $result2 = $db->query($sql2);
-  $result3 = $db->query($sql3);
+ 
 
-  if ($result->num_rows > 0) {
+  foreach ($checks as $table => $redirect) {
+    $sql = "SELECT * FROM $table WHERE username = '$username' AND password = '$password'";
+    $result = $db->query($sql);
+
+    if ($result && $result->num_rows > 0) {
     $data = $result->fetch_assoc();
     $_SESSION['username'] = $username;
-    header("location: rt/dashboard-rt.php");
-  } 
-  if ($result2->num_rows > 0) {
-    $data = $result2->fetch_assoc();
-    $_SESSION['username'] = $username;
-    header("location: warga/dashboard-warga.php");
-  } 
-  if ($result3->num_rows > 0) {
-    $data = $result3->fetch_assoc();
-    $_SESSION['username'] = $username;
-    header("location: sekuriti/dashboard-sekuriti.php");
-    exit;
-  } else {
-?>
-    <script type="text/javascript">
+    ?>
+    <script>
       Swal.fire({
-        icon: 'error',
-        title: 'Login Gagal',
-        confirmButtonColor: '#2fd43cff',
-        confirmButtonText: 'Coba Lagi'
+        icon: "success",
+        title: "Login berhasil!",
+        showConfirmButton: false,
+        timer: 1500
       });
+      setTimeout(() => {
+        window.location.href = "<?= $redirect ?>";
+      }, 1500);
     </script>
-<?php
+    <?php
+    exit;
   }
+}
+
+  // jika tidak ditemukan di ketiga akun
+?>
+  <script type="text/javascript">
+    Swal.fire({
+      icon: 'error',
+      title: 'Login Gagal',
+      text: 'Username atau Password Salah',
+      confirmButtonColor: '#482fd4ff',
+      confirmButtonText: 'Coba Lagi'
+    });
+  </script>
+<?php
 }
 ?>
 
