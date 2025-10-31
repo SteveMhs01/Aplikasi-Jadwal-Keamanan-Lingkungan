@@ -24,11 +24,11 @@ session_start();
     .login-container {
       max-width: 400px;
       margin: auto;
-      margin-top: 100px;
+      margin-top: 165px;
       padding: 20px;
       background: white;
       border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
     }
 
     .login-container h2 {
@@ -95,12 +95,24 @@ if (isset($_POST['login'])) {
     $result = $db->query($sql);
 
     if ($result && $result->num_rows > 0) {
-      $data = $result->fetch_assoc();
-      $_SESSION['username'] = $username;
-      header("Location: $redirect");
-      exit; // pastikan langsung berhenti setelah redirect (sama seperti kode asli)
-    }
+    $data = $result->fetch_assoc();
+    $_SESSION['username'] = $username;
+    ?>
+    <script>
+      Swal.fire({
+        icon: "success",
+        title: "Login berhasil!",
+        showConfirmButton: false,
+        timer: 1500
+      });
+      setTimeout(() => {
+        window.location.href = "<?= $redirect ?>";
+      }, 1500);
+    </script>
+    <?php
+    exit;
   }
+}
 
   // jika tidak ditemukan di ketiga akun
 ?>

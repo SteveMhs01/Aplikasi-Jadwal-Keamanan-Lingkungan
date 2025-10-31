@@ -137,7 +137,7 @@
                   </div>
 
                   <div class="text-end mt-4">
-                    <button class="btn-save"><i class="fa-solid fa-save me-2"></i>Simpan Perubahan</button>
+                    <button class="btn btn-outline-primary"><i class="fa-solid fa-save me-2"></i>Simpan Perubahan</button>
                   </div>
                 </div>
               </div>
