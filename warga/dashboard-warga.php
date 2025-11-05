@@ -30,6 +30,15 @@
               <h3>Selamat Datang 😎</h3>
               <p>Informasi Keamanan Lingkungan</p>
             </div>
+            <div class="col-xl-6 ms-auto">
+              <div class="card mb-4 shadow">
+                <div class="card-header">
+                  <i class="fa-solid fa-chart-simple me-1"></i>
+                  Grafik
+                </div>
+                <div class="card-body"><canvas id="myPieChart" width="100%" height="50"></canvas></div>
+              </div>
+            </div>
           </div>
  
           <div class="card mb-4 shadow">
