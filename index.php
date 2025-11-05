@@ -16,7 +16,7 @@
 
     body {
       font-family: 'Poppins', sans-serif;
-      background-color: #f9f9f9;
+      background-color: #f9f6f6;
       color: #333;
     }
 
@@ -117,7 +117,7 @@
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg fixed-top ms-5 me-5 rounded-4 shadow-sm mt-3 ">
     <div class="container">
-      <a class="navbar-brand" href="#">Jadwal Keamanan Lingkungan</a>
+      <a class="navbar-brand" href="#">Keamanan Lingkungan</a>
       <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -134,7 +134,7 @@
 
   <!-- Hero Section -->
   <section class="hero d-flex flex-column justify-content-center align-items-center">
-    <h1 class="mb-3">Selamat Datang di<br>Perumahan Putra Yudha Indah</h1>
+    <h1 class="mb-3">Selamat Datang   <br></h1>
     <p>RT 007 RW 08 · Kelurahan Kabil · Kecamatan Nongsa · Kota Batam</p>
     <a href="#tentang" class="btn btn-md btn-outline-primary mt-3 rounded-pill"><i class="fa-solid fa-arrow-right me-2"></i>Pelajari Lebih Lanjut</a>
   </section>
