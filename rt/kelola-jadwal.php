@@ -28,12 +28,10 @@
           <i class="text-muted">Kelola Jadwal Ronda</i>
           <div class="container mt-4">
             <div class="card shadow rounded-3 ">
-              <div class="card-body">
-                <div class="card-body">
                   <div class="card-body">
                     <!-- Header -->
                     <div class="d-flex justify-content-between align-items-center mb-4">
-                      <h5 class="mb-0">Daftar Jadwal Ronda</h5>
+                      <h5 class="mb-0"></h5>
                       <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#tambahJadwalModal">
                         <i class="fas fa-plus me-1"></i> Tambah Jadwal
                       </button>

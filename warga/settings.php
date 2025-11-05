@@ -17,7 +17,6 @@
   <style>
     body {
       background-color: #f9f6f6;
-      font-family: 'Poppins', sans-serif;
     }
 
     .card {

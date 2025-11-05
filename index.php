@@ -134,7 +134,7 @@
 
   <!-- Hero Section -->
   <section class="hero d-flex flex-column justify-content-center align-items-center">
-    <h1 class="mb-3">Selamat Datang di<br>Perumahan Putra Yudha Indah</h1>
+    <h1 class="mb-3">Selamat Datang   <br></h1>
     <p>RT 007 RW 08 · Kelurahan Kabil · Kecamatan Nongsa · Kota Batam</p>
     <a href="#tentang" class="btn btn-md btn-outline-primary mt-3 rounded-pill"><i class="fa-solid fa-arrow-right me-2"></i>Pelajari Lebih Lanjut</a>
   </section>

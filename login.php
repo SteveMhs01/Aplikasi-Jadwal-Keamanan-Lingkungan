@@ -55,11 +55,7 @@ session_start();
             <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan password" required>
           </div>
         </div>
-        <div class="mb-3 form-check">
-          <input type="checkbox" class="form-check-input" id="rememberMe">
-          <label class="form-check-label" for="rememberMe">Ingat Saya</label>
-        </div>
-        <button type="submit" class="btn btn-outline-success w-100" name="login"><i class="fas fa-sign-in-alt me-1"></i>Login</button>
+        <button type="submit" class="btn btn-outline-success w-100 mt-3" name="login"><i class="fas fa-sign-in-alt me-1"></i>Login</button>
       </form>
       <p class="text-center mt-3">
         <a href="#" class="link-primary">Lupa Password?</a>

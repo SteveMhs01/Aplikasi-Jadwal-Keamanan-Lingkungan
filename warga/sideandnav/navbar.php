@@ -3,6 +3,6 @@
   <a class="navbar-brand ps-3 me-3 text-black" href="index.html">Keamanan lingkungan</a>
   <!-- Sidebar Tombol-->
   <button class="btn btn-link btn-lg order-1 order-lg-0 me-lg-0 text-black tombol" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-  <a href="settings.php" class="ms-auto text-black text-decoration-none"><i class="fa-solid fa-user"></i><span class="ms-2">ADMINISTATOR</span></a>      
+  <a href="settings.php" class="ms-auto text-black text-decoration-none"><i class="fa-solid fa-user"></i><span class="ms-2">WARGA</span></a>      
 </nav>
 
