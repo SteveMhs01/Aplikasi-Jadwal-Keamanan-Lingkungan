@@ -19,52 +19,52 @@ session_start();
   <style>
     body {
       background-color: #f9f6f6;
+      margin: 0;
+      padding: 0;
     }
 
-    .login-container {
-      max-width: 400px;
-      margin: auto;
-      margin-top: 165px;
-      padding: 20px;
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    .container {
+      padding: 10% 0;
+      max-width: 450px;
     }
 
     .login-container h2 {
       margin-bottom: 20px;
     }
+
   </style>
   <title>Login</title>
 </head>
 
 <body>
-  <div class="login-container">
-    <h2 class="text-center">Login</h2>
-    <form id="loginForm" method="POST">
-      <div class="mb-3">
-        <label for="username" class="form-label">Username</label>
-        <div class="input-group">
-          <span class="input-group-text bg-white"><i class="fas fa-user"></i></span>
-          <input type="text" class="form-control" id="username" name="username" placeholder="Masukkan username" required>
+  <div class="container">
+    <div class="card p-4 rounded-3 shadow">
+      <h2 class="text-center">Login</h2>
+      <form id="loginForm" method="POST">
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <div class="input-group">
+            <span class="input-group-text bg-white"><i class="fas fa-user"></i></span>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Masukkan username" required>
+          </div>
         </div>
-      </div>
-      <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-        <div class="input-group">
-          <span class="input-group-text bg-white"><i class="fas fa-lock"></i></span>
-          <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan password" required>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <div class="input-group">
+            <span class="input-group-text bg-white"><i class="fas fa-lock"></i></span>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan password" required>
+          </div>
         </div>
-      </div>
-      <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="rememberMe">
-        <label class="form-check-label" for="rememberMe">Ingat Saya</label>
-      </div>
-      <button type="submit" class="btn btn-outline-success w-100" name="login"><i class="fas fa-sign-in-alt me-1"></i>Login</button>
-    </form>
-    <p class="text-center mt-3">
-      <a href="#" class="link-primary">Lupa Password?</a>
-    </p>
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" id="rememberMe">
+          <label class="form-check-label" for="rememberMe">Ingat Saya</label>
+        </div>
+        <button type="submit" class="btn btn-outline-success w-100" name="login"><i class="fas fa-sign-in-alt me-1"></i>Login</button>
+      </form>
+      <p class="text-center mt-3">
+        <a href="#" class="link-primary">Lupa Password?</a>
+      </p>
+    </div>
   </div>
   <script type="text/javascript" src="sweetalert/sweetalert2.all.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
@@ -88,34 +88,34 @@ if (isset($_POST['login'])) {
     'tb_sekuriti' => 'sekuriti/dashboard-sekuriti.php'
   ];
 
- 
+
 
   foreach ($checks as $table => $redirect) {
     $sql = "SELECT * FROM $table WHERE username = '$username' AND password = '$password'";
     $result = $db->query($sql);
 
     if ($result && $result->num_rows > 0) {
-    $data = $result->fetch_assoc();
-    $_SESSION['username'] = $username;
-    ?>
-    <script>
-      Swal.fire({
-        icon: "success",
-        title: "Login berhasil!",
-        showConfirmButton: false,
-        timer: 1500
-      });
-      setTimeout(() => {
-        window.location.href = "<?= $redirect ?>";
-      }, 1500);
-    </script>
-    <?php
-    exit;
+      $data = $result->fetch_assoc();
+      $_SESSION['username'] = $username;
+?>
+      <script>
+        Swal.fire({
+          icon: "success",
+          title: "Login berhasil!",
+          showConfirmButton: false,
+          timer: 1500
+        });
+        setTimeout(() => {
+          window.location.href = "<?= $redirect ?>";
+        }, 1500);
+      </script>
+  <?php
+      exit;
+    }
   }
-}
 
   // jika tidak ditemukan di ketiga akun
-?>
+  ?>
   <script type="text/javascript">
     Swal.fire({
       icon: 'error',

@@ -21,7 +21,7 @@
     .card {
       border: none;
       border-radius: 14px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     }
 
     .status-badge {
@@ -31,9 +31,20 @@
       font-weight: 500;
     }
 
-    .badge-waiting { background-color: #fef9c3; color: #92400e; }
-    .badge-success { background-color: #dcfce7; color: #15803d; }
-    .badge-danger  { background-color: #fee2e2; color: #b91c1c; }
+    .badge-waiting {
+      background-color: #fef9c3;
+      color: #92400e;
+    }
+
+    .badge-success {
+      background-color: #dcfce7;
+      color: #15803d;
+    }
+
+    .badge-danger {
+      background-color: #fee2e2;
+      color: #b91c1c;
+    }
 
     .btn-detail {
       background-color: #3b82f6;
@@ -59,7 +70,9 @@
       border-radius: 8px;
     }
 
-    .btn-detail:hover, .btn-validasi:hover, .btn-tolak:hover {
+    .btn-detail:hover,
+    .btn-validasi:hover,
+    .btn-tolak:hover {
       opacity: 0.9;
     }
 
@@ -76,7 +89,8 @@
       color: #6b7280 !important;
     }
 
-    .filter-section .form-select, .filter-section .form-control {
+    .filter-section .form-select,
+    .filter-section .form-control {
       border-radius: 8px;
     }
   </style>
@@ -89,12 +103,13 @@
   ?>
   <div id="layoutSidenav">
     <div id="layoutSidenav_content">
-      <div class="container py-4">
+      <main class="p-4">
+        <div class="container-fluid px-4">
 
-        <!-- Judul -->
-        <h1 class=" mb-4">Pengaduan Insiden</h1>
+          <!-- Judul -->
+          <h1 class=" mb-4">Pengaduan Insiden</h1>
 
-         <div class="row g-3 mb-4">
+          <div class="row g-3 mb-4">
             <!-- Card 1 -->
             <div class="col-xl-3 col-md-6">
               <div class="card shadow border-0">
@@ -155,85 +170,83 @@
               </div>
             </div>
           </div>
-       
 
-        <!-- Filter -->
-        <div class="card mb-4 p-3 shadow">
-          <div class="d-flex flex-wrap align-items-center gap-2 filter-section">
-            <h6 class="fw-semibold mb-0 me-3">Laporan Menunggu Validasi</h6>
-            <select class="form-select w-auto">
-              <option>Semua Urgensi</option>
-              <option>Tinggi</option>
-              <option>Sedang</option>
-              <option>Rendah</option>
-            </select>
-            <select class="form-select w-auto">
-              <option>Semua Jenis</option>
-              <option>Kriminal</option>
-              <option>Kecelakaan</option>
-              <option>Kebersihan</option>
-            </select>
-            <input type="text" class="form-control w-auto" placeholder="Cari laporan...">
-          </div>
-        </div>
 
-        <!-- Daftar Laporan -->
-        <div class="card mb-3 p-3 card-laporan shadow">
-          <div class="d-flex justify-content-between align-items-start">
-            <div>
-              <h6 class="fw-bold mb-1">Sampah Menumpuk <span class="badge bg-success-subtle text-success ms-2">Baru</span></h6>
-              <div class="text-muted small mb-2"><i class="fa-regular fa-user"></i> J. Mendole Nias, A4 · <i class="fa-regular fa-calendar"></i> 8 Nov 2025, 19:00</div>
-              <p class="mb-2 text-secondary">Sampah telah menumpuk di TPS selama 4 hari karena truk pengangkut tidak datang. Menimbulkan bau tidak sedap dan berpotensi menjadi sumber penyakit.</p>
+          <!-- Filter -->
+          <div class="card mb-4 p-3 shadow">
+            <div class="d-flex flex-wrap align-items-center gap-2 filter-section">
+              <h6 class="fw-semibold mb-0 me-3">Laporan Menunggu Validasi</h6>
+              <select class="form-select w-auto">
+                <option>Semua Urgensi</option>
+                <option>Tinggi</option>
+                <option>Sedang</option>
+                <option>Rendah</option>
+              </select>
+              <select class="form-select w-auto">
+                <option>Semua Jenis</option>
+                <option>Kriminal</option>
+                <option>Kecelakaan</option>
+                <option>Kebersihan</option>
+              </select>
+              <input type="text" class="form-control w-auto" placeholder="Cari laporan...">
             </div>
-            <button class="btn btn-warning btn-sm">Menunggu Validasi</button>
           </div>
-          <div class="mt-3 d-flex gap-2">
-            <button class="btn-validasi btn-sm"><i class="fa-solid fa-check me-1"></i> Validasi</button>
-            <button class="btn-tolak btn-sm"><i class="fa-solid fa-xmark me-1"></i> Tolak</button>
-            <button class="btn-detail btn-sm"><i class="fa-solid fa-eye me-1"></i> Detail</button>
-          </div>
-        </div>
 
-        <div class="card mb-3 p-3 card-laporan shadow">
-          <div class="d-flex justify-content-between align-items-start">
-            <div>
-              <h6 class="fw-bold mb-1">Kecelakaan Lalu Lintas <span class="badge bg-warning-subtle text-warning ms-2">Sedang</span></h6>
-              <div class="text-muted small mb-2"><i class="fa-regular fa-user"></i> P. Yanes, A1 · <i class="fa-regular fa-calendar"></i> 9 Nov 2025, 08:00</div>
-              <p class="mb-2 text-secondary">Tabrakan antara sepeda motor dan mobil angkutan umum. Satu orang luka-luka dan sudah dibawa ke puskesmas.</p>
+          <!-- Daftar Laporan -->
+          <div class="card mb-3 p-3 card-laporan shadow">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <h6 class="fw-bold mb-1">Sampah Menumpuk <span class="badge bg-success-subtle text-success ms-2">Baru</span></h6>
+                <div class="text-muted small mb-2"><i class="fa-regular fa-user"></i> J. Mendole Nias, A4 · <i class="fa-regular fa-calendar"></i> 8 Nov 2025, 19:00</div>
+                <p class="mb-2 text-secondary">Sampah telah menumpuk di TPS selama 4 hari karena truk pengangkut tidak datang. Menimbulkan bau tidak sedap dan berpotensi menjadi sumber penyakit.</p>
+              </div>
+              <button class="btn btn-warning btn-sm">Menunggu Validasi</button>
             </div>
-            <button class="btn btn-warning btn-sm">Menunggu Validasi</button>
-          </div>
-          <div class="mt-3 d-flex gap-2">
-            <button class="btn-validasi btn-sm"><i class="fa-solid fa-check me-1"></i> Validasi</button>
-            <button class="btn-tolak btn-sm"><i class="fa-solid fa-xmark me-1"></i> Tolak</button>
-            <button class="btn-detail btn-sm"><i class="fa-solid fa-eye me-1"></i> Detail</button>
-          </div>
-        </div>
-
-        <div class="card mb-3 p-3 card-laporan shadow">
-          <div class="d-flex justify-content-between align-items-start">
-            <div>
-              <h6 class="fw-bold mb-1">Pencurian Sepeda Motor <span class="badge bg-warning-subtle text-warning ms-2">Sedang</span></h6>
-              <div class="text-muted small mb-2"><i class="fa-regular fa-user"></i> A. Moringa · <i class="fa-regular fa-calendar"></i> 10 Nov 2025, 06:00</div>
-              <p class="mb-2 text-secondary">Sepeda motor Honda Beat warna hitam milik warga dicuri dari halaman rumah. Kejadian terjadi saat korban sedang tidur.</p>
+            <div class="mt-3 d-flex gap-2">
+              <button class="btn-validasi btn-sm"><i class="fa-solid fa-check me-1"></i> Validasi</button>
+              <button class="btn-tolak btn-sm"><i class="fa-solid fa-xmark me-1"></i> Tolak</button>
+              <button class="btn-detail btn-sm"><i class="fa-solid fa-eye me-1"></i> Detail</button>
             </div>
-            <button class="btn btn-warning btn-sm">Menunggu Validasi</button>
           </div>
-          <div class="mt-3 d-flex gap-2">
-            <button class="btn-validasi btn-sm"><i class="fa-solid fa-check me-1"></i> Validasi</button>
-            <button class="btn-tolak btn-sm"><i class="fa-solid fa-xmark me-1"></i> Tolak</button>
-            <button class="btn-detail btn-sm"><i class="fa-solid fa-eye me-1"></i> Detail</button>
-          </div>
-        </div>
 
-      </div>
+          <div class="card mb-3 p-3 card-laporan shadow">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <h6 class="fw-bold mb-1">Kecelakaan Lalu Lintas <span class="badge bg-warning-subtle text-warning ms-2">Sedang</span></h6>
+                <div class="text-muted small mb-2"><i class="fa-regular fa-user"></i> P. Yanes, A1 · <i class="fa-regular fa-calendar"></i> 9 Nov 2025, 08:00</div>
+                <p class="mb-2 text-secondary">Tabrakan antara sepeda motor dan mobil angkutan umum. Satu orang luka-luka dan sudah dibawa ke puskesmas.</p>
+              </div>
+              <button class="btn btn-warning btn-sm">Menunggu Validasi</button>
+            </div>
+            <div class="mt-3 d-flex gap-2">
+              <button class="btn-validasi btn-sm"><i class="fa-solid fa-check me-1"></i> Validasi</button>
+              <button class="btn-tolak btn-sm"><i class="fa-solid fa-xmark me-1"></i> Tolak</button>
+              <button class="btn-detail btn-sm"><i class="fa-solid fa-eye me-1"></i> Detail</button>
+            </div>
+          </div>
+
+          <div class="card mb-3 p-3 card-laporan shadow">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <h6 class="fw-bold mb-1">Pencurian Sepeda Motor <span class="badge bg-warning-subtle text-warning ms-2">Sedang</span></h6>
+                <div class="text-muted small mb-2"><i class="fa-regular fa-user"></i> A. Moringa · <i class="fa-regular fa-calendar"></i> 10 Nov 2025, 06:00</div>
+                <p class="mb-2 text-secondary">Sepeda motor Honda Beat warna hitam milik warga dicuri dari halaman rumah. Kejadian terjadi saat korban sedang tidur.</p>
+              </div>
+              <button class="btn btn-warning btn-sm">Menunggu Validasi</button>
+            </div>
+            <div class="mt-3 d-flex gap-2">
+              <button class="btn-validasi btn-sm"><i class="fa-solid fa-check me-1"></i> Validasi</button>
+              <button class="btn-tolak btn-sm"><i class="fa-solid fa-xmark me-1"></i> Tolak</button>
+              <button class="btn-detail btn-sm"><i class="fa-solid fa-eye me-1"></i> Detail</button>
+            </div>
+          </div>
+
+        </div>
+      </main>
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
   <script src="../js/scripts.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-  <script src="../assets/demo/chart-bar-demo.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
   <script type="text/javascript" src="../sweetalert/sweetalert2.all.min.js"></script>
 </body>
 
