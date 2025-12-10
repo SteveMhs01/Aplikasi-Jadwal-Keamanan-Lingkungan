@@ -1,29 +1,67 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Perumahan Putra Yudha Indah</title>
+  <!-- Judul -->
+  <title>Keamanan Lingkungan</title>
+
+  <!-- Link Animasi -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+  <!-- Link Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
 
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Custom Styles -->
   <style>
+    @font-face {
+      font-family: 'Comfortaa';
+      font-style: normal;
+      font-display: swap;
+      font-weight: 300;
+      src: url('/comfortaa-latin-300.woff') format('woff');
+    }
+
+    @font-face {
+      font-family: 'Comfortaa';
+      font-style: normal;
+      font-display: swap;
+      font-weight: 600;
+      src: url('/comfortaa-latin-600.woff') format('woff');
+    }
+
+    @font-face {
+      font-family: 'IBM Plex Mono';
+      font-style: normal;
+      font-display: swap;
+      font-weight: 400;
+      src: url('/ibm-plex-mono-latin-400.woff') format('woff');
+    }
+
     :root {
       --crystal-gradient: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
     }
 
     body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #f9f6f6;
+      font-family: 'Comfortaa', sans-serif;
+      background-color: #f9f6f6d7;
       color: #333;
+      scroll-behavior: smooth;
     }
 
     /* Navbar */
     .navbar {
       background: white;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      position: fixed;
     }
 
     .navbar-brand {
@@ -33,12 +71,12 @@
 
     /* Hero Section */
     .hero {
-      background: linear-gradient(160deg, #0f1724 0%, #4c1d95 40%, #e66465 70%, #45d0b6 100%);
-      color: #222;
+      background: #092C4C;
+      color: #eaeaea;
       text-align: center;
       padding: 150px 20px;
       position: relative;
-      margin-top: 90px;
+
     }
 
     .hero h1 {
@@ -48,7 +86,7 @@
 
     .hero p {
       font-size: 1.1rem;
-      color: #444;
+      color: #eaeaea;
     }
 
     .hero .btn:hover {
@@ -80,7 +118,7 @@
       border: none;
       border-radius: 15px;
       overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s ease;
     }
 
@@ -115,7 +153,7 @@
 
 <body>
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg fixed-top ms-5 me-5 rounded-4 shadow-sm mt-3 ">
+  <nav class="navbar navbar-expand-lg fixed-top ms-3 me-3 rounded-4 shadow-sm mt-3">
     <div class="container">
       <a class="navbar-brand" href="#">Keamanan Lingkungan</a>
       <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -134,9 +172,9 @@
 
   <!-- Hero Section -->
   <section class="hero d-flex flex-column justify-content-center align-items-center">
-    <h1 class="mb-3">Selamat Datang   <br></h1>
-    <p>RT 007 RW 08 · Kelurahan Kabil · Kecamatan Nongsa · Kota Batam</p>
-    <a href="#tentang" class="btn btn-md btn-outline-primary mt-3 rounded-pill"><i class="fa-solid fa-arrow-right me-2"></i>Pelajari Lebih Lanjut</a>
+    <h1 class="mb-3 animate__animated animate__fadeIn">Selamat Datang 😎😎 <br></h1>
+    <p class="animate__animated animate__fadeIn"></p>
+    <button href="#tentang" class="btn btn-md btn-outline-primary mt-3 rounded-pill animate__animated animate__fadeIn"><i class="fa-solid fa-arrow-right me-2"></i>Pelajari Lebih Lanjut</button>
   </section>
 
   <!-- Tentang Kami -->
@@ -144,13 +182,12 @@
     <div class="container">
       <div class="row align-items-center">
         <div class="col-md-5 mb-4 mb-md-0">
-          <img src="./img/img.png" class="img-fluid rounded shadow" alt="Tentang Kami">
+          <img src="./img/img.png" class="img-fluid rounded shadow animate__animated animate__fadeIn" alt="Tentang Kami">
         </div>
-        <div class="col-md-7">
+        <div class="col-md-7 animate__animated animate__fadeInRight">
           <div class="section-title mb-2">Tentang Kami</div>
           <h2 class="fw-bold mb-3">Komunitas Kita Bersama</h2>
-          <p>Perumahan Putra Yudha Indah adalah komunitas warga yang menjunjung tinggi nilai kebersamaan, kepedulian, dan tanggung jawab sosial dalam menjaga keamanan serta keharmonisan lingkungan.</p>
-          <div class="icon-circle mt-3"><i class="bi bi-people-fill"></i></div>
+          <p>Ronda juga mencerminkan semangat kebersamaan dan kekompakan warga dalam membangun keamanan bersama. Melalui kegiatan ini, terbentuk budaya saling menjaga, menghargai, dan bertanggung jawab demi terciptanya ketertiban lingkungan yang berkelanjutan.</p>
         </div>
       </div>
     </div>
@@ -165,7 +202,7 @@
 
       <div class="row g-4">
         <!-- card 1 -->
-        <div class="col-md-3 col-sm-6">
+        <div class="col-md-3 col-sm-6 animate__animated animate__fadeIn">
           <div class="card">
             <img src="https://source.unsplash.com/400x300/?security,guard" alt="">
             <div class="card-body">
@@ -176,7 +213,7 @@
         </div>
 
         <!-- card 2 -->
-        <div class="col-md-3 col-sm-6">
+        <div class="col-md-3 col-sm-6 animate__animated animate__fadeIn">
           <div class="card">
             <img src="https://source.unsplash.com/400x300/?meeting,neighborhood" alt="">
             <div class="card-body">
@@ -187,7 +224,7 @@
         </div>
 
         <!-- card 3 -->
-        <div class="col-md-3 col-sm-6">
+        <div class="col-md-3 col-sm-6 animate__animated animate__fadeIn">
           <div class="card">
             <img src="https://source.unsplash.com/400x300/?volunteer,community" alt="">
             <div class="card-body">
@@ -198,7 +235,7 @@
         </div>
 
         <!-- card 4 -->
-        <div class="col-md-3 col-sm-6">
+        <div class="col-md-3 col-sm-6 animate__animated animate__fadeIn">
           <div class="card">
             <img src="https://source.unsplash.com/400x300/?police,night" alt="">
             <div class="card-body">
@@ -212,23 +249,46 @@
   </section>
 
   <!-- Footer -->
-  <footer>
-    <div class="container text-center">
-      <p class="mb-2">Perumahan Putra Yudha Indah · RT 007 RW 08 · Kabil, Nongsa, Batam</p>
-      <div class="mb-3">
-        <a href="#"><i class="bi bi-facebook"></i></a>
-        <a href="#"><i class="bi bi-instagram"></i></a>
-        <a href="#"><i class="bi bi-whatsapp"></i></a>
-        <a href="#"><i class="bi bi-envelope"></i></a>
+  <footer class="bg-dark py-4 mt-5">
+    <div class="container pt-4">
+      <div class="row text-center text-md-start align-items-center mb-4">
+        <div class="col-md-6 mb-3 mb-md-0">
+          <h5 class="fw-bold">Hubungi Kami</h5>
+          <p class="mb-0">
+            Perumahan Putra Yudha Indah
+          </p>
+          <p>RT 007 RW 08 · Kabil, Nongsa, Batam</p>
+          <i class="fa-solid fa-phone"></i>
+          <span>+62 856-6847-5298</span>
+          <br>
+          <i class="fa-solid fa-phone text-dark"></i>
+          <span>+62 895-6036-69128</span>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <h5 class="fw-bold">Ikuti Kami</h5>
+          <div class="d-flex justify-content-center justify-content-md-end gap-3 fs-4">
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+            <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+          </div>
+        </div>
       </div>
-      <p class="text-secondary small mb-0">© 2025 Komunitas Putra Yudha Indah</p>
+      <hr class="my-3">
+      <p class="text-secondary small mb-0 text-center">
+        &copy; <span id="year"></span> TRPL.
+      </p>
     </div>
   </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
   <!-- Icon -->
-  <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </body>
+
 </html>
