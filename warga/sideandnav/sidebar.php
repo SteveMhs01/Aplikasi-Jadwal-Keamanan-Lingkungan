@@ -38,7 +38,7 @@
   document.getElementById("logout").addEventListener("click", function(event) {
     event.preventDefault();
     Swal.fire({
-      title: 'Konfirmasi Logo',
+      title: 'Konfirmasi Logout',
       text: "Apakah Anda yakin ingin logout?",
       icon: 'warning',
       showCancelButton: true,
@@ -46,7 +46,7 @@
       cancelButtonText: 'Batal'
     }).then((result) => {
       if (result.isConfirmed) {
-        window.location.href = "../index.php";
+        window.location.href = "../logout.php";
       }
     });
   });

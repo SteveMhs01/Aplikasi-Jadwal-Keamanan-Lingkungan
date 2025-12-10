@@ -1,7 +1,3 @@
-<?php
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,9 +16,11 @@
 
 <body class="sb-nav-fixed" style="background-color: #f9f6f6; ">
   <?php
+  include("../cek-login.php");
+  cekRole("sekuriti");
+  include '../connection/connection.php';
   include 'sideandnav/navbar.php';
   include 'sideandnav/sidebar.php';
-  include '../connection/connection.php';
 
   ?>
   <div id="layoutSidenav">
@@ -32,70 +30,65 @@
           <h1 class="mb-4">Dashboard</h1>
           <div class="card mb-4 shadow text-white">
             <div class="card-body rounded-3" style="background: linear-gradient(160deg, #0f1724 0%, #4c1d95 40%, #e66465 70%, #45d0b6 100%);">
-              <h3>Selamat Datang 😎</h3>
+              <h3>Selamat Datang, <?php echo htmlspecialchars($_SESSION['nama']); ?> 😎</h3>
               <p>Informasi Keamanan Lingkungan</p>
             </div>
           </div>
           <div class="row g-3 mb-4">
-         
 
-          <div class="">
+
+            <div class="">
+              <div class="card mb-4 shadow">
+                <div class="card-body">
+                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur neque delectus provident est ex laboriosam accusantium harum. Ipsa nisi beatae laboriosam officia, sunt iusto ex obcaecati consequatur dicta reiciendis eligendi nulla est rem sit eum? Accusantium voluptatem quae unde eaque nisi, aut necessitatibus asperiores voluptates officiis eos cum velit optio voluptate tempore ad animi natus mollitia omnis dicta consectetur sit a sequi nulla quas! Molestiae ducimus repellendus a! Reiciendis quas quam et possimus officiis nostrum eligendi? Similique officiis nemo culpa impedit veritatis voluptates commodi odio pariatur ipsum quibusdam accusantium temporibus porro et suscipit, fugit molestias, necessitatibus itaque alias sed quam!</p>
+                </div>
+              </div>
+            </div>
             <div class="card mb-4 shadow">
               <div class="card-body">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur neque delectus provident est ex laboriosam accusantium harum. Ipsa nisi beatae laboriosam officia, sunt iusto ex obcaecati consequatur dicta reiciendis eligendi nulla est rem sit eum? Accusantium voluptatem quae unde eaque nisi, aut necessitatibus asperiores voluptates officiis eos cum velit optio voluptate tempore ad animi natus mollitia omnis dicta consectetur sit a sequi nulla quas! Molestiae ducimus repellendus a! Reiciendis quas quam et possimus officiis nostrum eligendi? Similique officiis nemo culpa impedit veritatis voluptates commodi odio pariatur ipsum quibusdam accusantium temporibus porro et suscipit, fugit molestias, necessitatibus itaque alias sed quam!</p>
+                <h5 class="mb-3">📋 Jadwal Jaga Hari Ini</h5>
+                <table class="table table-sm align-middle">
+                  <thead class="table-light">
+                    <tr>
+                      <th>Nama</th>
+                      <th>Shift</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Aldo</td>
+                      <td>Malam (22:00 - 02:00)</td>
+                      <td><span class="badge text-success">Hadir</span></td>
+                    </tr>
+                    <tr>
+                      <td>Bima</td>
+                      <td>Malam (02:00 - 06:00)</td>
+                      <td><span class="badge text-success">Hadir</span></td>
+                    </tr>
+                    <tr>
+                      <td>Citra</td>
+                      <td>Sore (18:00 - 22:00)</td>
+                      <td><span class="badge text-danger">Tidak Hadir</span></td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
-          </div>
-          <div class="card mb-4 shadow">
-            <div class="card-body">
-              <h5 class="mb-3">📋 Jadwal Jaga Hari Ini</h5>
-              <table class="table table-sm align-middle">
-                <thead class="table-light">
-                  <tr>
-                    <th>Nama</th>
-                    <th>Shift</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Aldo</td>
-                    <td>Malam (22:00 - 02:00)</td>
-                    <td><span class="badge text-success">Hadir</span></td>
-                  </tr>
-                  <tr>
-                    <td>Bima</td>
-                    <td>Malam (02:00 - 06:00)</td>
-                    <td><span class="badge text-success">Hadir</span></td>
-                  </tr>
-                  <tr>
-                    <td>Citra</td>
-                    <td>Sore (18:00 - 22:00)</td>
-                    <td><span class="badge text-danger">Tidak Hadir</span></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xl-6">
-              <div class="card mb-4 shadow">
-                <div class="card-body">
-                  <h6 class="mb-4"><i class="fas fa-chart-bar me-2"></i>Grafik</h6>
-                  <canvas id="barChart" width="100%" height="50"></canvas>
-
+            <div class="row g-4">
+              <div class="col-md-8">
+                <div class="card p-3">
+                  <h6 class="fw-semibold mb-3">Insiden 6 Bulan Terakhir</h6>
+                  <canvas id="barChart" width="100%" height="40"></canvas>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card p-3">
+                  <h6 class="fw-semibold mb-3">Distribusi Jenis Insiden</h6>
+                  <canvas id="pieChart" width="100%" height="87"></canvas>
                 </div>
               </div>
             </div>
-            <div class="col-xl-6 ms-auto">
-              <div class="card mb-4 shadow">
-                <div class="card-body">
-                  <h6 class="mb-4"><i class="fas fa-chart-pie me-2"></i>Grafik</h6>
-                  <canvas id="pieChart" width="100%" height="20"></canvas>
-                </div>
-              </div>
-            </div>
-          </div>
       </main>
     </div>
   </div>

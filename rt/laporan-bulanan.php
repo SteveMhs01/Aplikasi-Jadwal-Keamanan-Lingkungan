@@ -26,6 +26,7 @@
         <div class="container-fluid px-4">
           <h1 class="mb-4">Rekap Laporan Bulanan</h1>
           <div class="container-fluid p-4">
+
             <!-- Filter Section -->
             <div class="row g-3 mb-4 align-items-end">
               <div class="col-md-3">
@@ -62,7 +63,7 @@
             <!-- Statistik Cards -->
             <div class="row g-3 mb-4">
               <div class="col-md-3">
-                <div class="card stat-card text-center p-3">
+                <div class="card stat-card text-center p-3 shadow">
                   <div class="card-body">
                     <i class="bi bi-flag fs-3 text-primary"></i>
                     <h6 class="mt-2 mb-1 text-muted">Total Insiden</h6>
@@ -72,7 +73,7 @@
                 </div>
               </div>
               <div class="col-md-3">
-                <div class="card stat-card text-center p-3">
+                <div class="card stat-card text-center p-3 shadow">
                   <div class="card-body">
                     <i class="bi bi-exclamation-triangle fs-3 text-danger"></i>
                     <h6 class="mt-2 mb-1 text-muted">Insiden Kriminal</h6>
@@ -82,7 +83,7 @@
                 </div>
               </div>
               <div class="col-md-3">
-                <div class="card stat-card text-center p-3">
+                <div class="card stat-card text-center p-3 shadow">
                   <div class="card-body">
                     <i class="bi bi-clipboard fs-3 text-warning"></i>
                     <h6 class="mt-2 mb-1 text-muted">Laporan</h6>
@@ -92,7 +93,7 @@
                 </div>
               </div>
               <div class="col-md-3">
-                <div class="card stat-card text-center p-3">
+                <div class="card stat-card text-center p-3 shadow">
                   <div class="card-body">
                     <i class="bi bi-check2-circle fs-3 text-success"></i>
                     <h6 class="mt-2 mb-1 text-muted">Selesai</h6>
@@ -103,9 +104,9 @@
               </div>
             </div>
 
-            
+
             <!-- Tabel -->
-            <div class="card mb-4 p-3">
+            <div class="card mb-4 p-3 shadow">
               <h6 class="fw-semibold mb-3">Data Insiden Terbaru</h6>
               <div class="table-responsive">
                 <table class="table align-middle">
@@ -143,13 +144,13 @@
             <!-- Grafik Laporan -->
             <div class="row g-4">
               <div class="col-md-8">
-                <div class="card p-3">
+                <div class="card p-3 shadow">
                   <h6 class="fw-semibold mb-3">Insiden 6 Bulan Terakhir</h6>
                   <canvas id="barChart" width="100%" height="40"></canvas>
                 </div>
               </div>
               <div class="col-md-4">
-                <div class="card p-3">
+                <div class="card p-3 shadow">
                   <h6 class="fw-semibold mb-3">Distribusi Jenis Insiden</h6>
                   <canvas id="pieChart" width="100%" height="87"></canvas>
                 </div>
@@ -167,6 +168,6 @@
   <script src="../grafik/grafik-kehadiran.js"></script>
   <script type="text/javascript" src="../sweetalert/sweetalert2.all.min.js"></script>
 </body>
-  
+
 
 </html>

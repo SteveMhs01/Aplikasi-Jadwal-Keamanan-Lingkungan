@@ -5,13 +5,13 @@ $username = "root";
 $password = "";
 $database_name = "apk_keamanan_lingkungan";
 
-$db = mysqli_connect(
+$koneksi = mysqli_connect(
    $hostname,
    $username,
    $password,
    $database_name
 );
 
-if ($db->connect_error) {
+if ($koneksi->connect_error) {
    die("erorr!");
 }

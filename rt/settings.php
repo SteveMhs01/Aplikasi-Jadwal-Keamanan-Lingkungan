@@ -1,3 +1,59 @@
+<?php
+session_start();
+include "../connection/connection.php";
+
+// Pastikan user sudah login
+if (!isset($_SESSION['id_pengguna'])) {
+  header("Location: ../login.php");
+  exit();
+}
+
+$id = $_SESSION['id_pengguna'];
+
+// AMBIL DATA USER
+$query = mysqli_query($koneksi, "SELECT * FROM tb_pengguna WHERE id_pengguna='$id'");
+$data = mysqli_fetch_assoc($query);
+
+// PROSES UBAH PASSWORD
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['ubah_password'])) {
+
+  $password_lama = $_POST['password_lama'];
+  $password_baru = $_POST['password_baru'];
+  $konfirmasi = $_POST['konfirmasi_password'];
+
+  // Validasi password lama
+  if (!password_verify($password_lama, $data['password'])) {
+    echo "<script>alert('Password lama salah!'); window.location='settings.php';</script>";
+    exit();
+  }
+
+  // Validasi password baru harus sama dengan konfirmasi
+  if ($password_baru !== $konfirmasi) {
+    echo "<script>alert('Konfirmasi password tidak cocok!'); window.location='settings.php';</script>";
+    exit();
+  }
+
+  // Hash password baru
+  $hashed = password_hash($password_baru, PASSWORD_DEFAULT);
+
+  // Update database
+  $update = mysqli_query($koneksi, "
+        UPDATE tb_pengguna SET password='$hashed' WHERE id_pengguna='$id'
+    ");
+
+  if ($update) {
+    echo "<script>alert('Password berhasil diubah!'); window.location='settings.php';</script>";
+  } else {
+    echo "<script>alert('Gagal mengubah password!'); window.location='settings.php';</script>";
+  }
+
+  exit();
+}
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,7 +78,7 @@
     .card {
       border: none;
       border-radius: 16px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     }
 
     .profile-pic {
@@ -33,7 +89,8 @@
       border: 3px solid #e5e7eb;
     }
 
-    .form-control, .form-select {
+    .form-control,
+    .form-select {
       border-radius: 10px;
     }
 
@@ -73,7 +130,7 @@
     <div id="layoutSidenav_content">
       <main class="p-4">
         <div class="container-fluid px-4">
-          <div class="card shadow" >
+          <div class="card shadow">
             <div class="card-body">
               <div class="container py-4">
                 <h4 class="fw-bold mb-4"><i class="fa-solid fa-gear me-2"></i>Pengaturan Pengguna</h4>
@@ -82,70 +139,85 @@
                   <div class="">
                     <div class="col-md-3">
                       <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Profile" class="profile-pic mb-5 w-100 h-100">
-                      
+
                     </div>
                     <hr class="mb-5">
+
+                    <!-- Detail Akun -->
                     <div class="col-md-9 mb-2">
                       <h5 class="fw-semibold mb-4">Informasi Akun</h5>
                       <div class="row g-3">
                         <div class="col-md-6">
                           <label class="form-label fw-semibold">Nama Lengkap</label>
-                          <input type="text" class="form-control" placeholder="Nama Lengkap" value="Rizky Fauzi">
+                          <input type="text" class="form-control" name="nama_lengkap"
+                            value="<?php echo $data['nama']; ?>">
                         </div>
-                        <div class="col-md-6">
-                          <label class="form-label fw-semibold">Username</label>
-                          <input type="text" class="form-control" placeholder="Username" value="rizky_rt">
-                        </div>
+
+
+
                         <div class="col-md-6">
                           <label class="form-label fw-semibold">Email</label>
-                          <input type="email" class="form-control" placeholder="Email" value="rizky@example.com">
+                          <input type="email" class="form-control" name="email"
+                            value="<?php echo $data['email']; ?>">
                         </div>
+
                         <div class="col-md-6">
-                          <label class="form-label fw-semibold">Nik</label>
-                          <input type="text" class="form-control" placeholder="No Nik" value="21717111">
+                          <label class="form-label fw-semibold">NIK</label>
+                          <input type="text" class="form-control" name="nik"
+                            value="<?php echo $data['nik']; ?>">
                         </div>
+
                         <div class="col-md-6">
                           <label class="form-label fw-semibold">Alamat</label>
-                          <br>
-                          <textarea name="" id="" cols="30" rows="2" class="form-control" placeholder="">Politeknik</textarea>
+                          <textarea class="form-control" name="alamat" rows="2"><?php echo $data['alamat']; ?></textarea>
                         </div>
+
                         <div class="col-md-6">
                           <label class="form-label fw-semibold">Nomor Telepon</label>
-                          <input type="text" class="form-control" placeholder="08xxxxxxxxxx" value="081234567890">
+                          <input type="text" class="form-control" name="telepon"
+                            value="<?php echo $data['no_hp']; ?>">
                         </div>
+
                       </div>
                     </div>
                   </div>
+                </div>
 
-                  <hr class="mb-5">
+                <hr class="mb-5">
 
-                  <h5 class="fw-semibold mb-3"><i class="fa-solid fa-lock me-2"></i>Ubah Password</h5>
+                <!-- Form Ubah Password -->
+                <h5 class="fw-semibold mb-3"><i class="fa-solid fa-lock me-2"></i>Ubah Password</h5>
+                <form action="" method="POST">
                   <div class="row g-3">
                     <div class="col-md-4">
                       <label class="form-label fw-semibold">Password Lama</label>
-                      <input type="password" class="form-control" placeholder="Masukkan password lama">
+                      <input type="password" name="password_lama" class="form-control" required>
                     </div>
                     <div class="col-md-4">
                       <label class="form-label fw-semibold">Password Baru</label>
-                      <input type="password" class="form-control" placeholder="Masukkan password baru">
+                      <input type="password" name="password_baru" class="form-control" required>
                     </div>
                     <div class="col-md-4">
                       <label class="form-label fw-semibold">Konfirmasi Password</label>
-                      <input type="password" class="form-control" placeholder="Konfirmasi password baru">
+                      <input type="password" name="konfirmasi_password" class="form-control" required>
                     </div>
                   </div>
 
                   <div class="text-end mt-4">
-                    <button class="btn btn-outline-primary"><i class="fa-solid fa-save me-2"></i>Simpan Perubahan</button>
+                    <button type="submit" class="btn btn-outline-primary" name="ubah_password">
+                      <i class="fa-solid fa-save me-2"></i>Simpan Perubahan
+                    </button>
                   </div>
-                </div>
+                </form>
+
               </div>
             </div>
           </div>
         </div>
-      </main>
-
     </div>
+    </main>
+
+  </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
   <script src="../js/scripts.js"></script>

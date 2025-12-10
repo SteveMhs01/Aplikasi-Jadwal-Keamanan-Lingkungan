@@ -17,6 +17,9 @@
 
 <body class="sb-nav-fixed" style="background-color: #f8f0f0ff;">
   <?php
+  include("../cek-login.php");
+  cekRole("warga");
+  include '../connection/connection.php';
   include 'sideandnav/navbar.php';
   include 'sideandnav/sidebar.php';
   ?>
@@ -27,20 +30,12 @@
           <h1 class="mb-4">Dashboard</h1>
           <div class="card mb-4 shadow text-white">
             <div class="card-body rounded-3" style="background: linear-gradient(160deg, #0f1724 0%, #4c1d95 40%, #e66465 70%, #45d0b6 100%);">
-              <h3>Selamat Datang 😎</h3>
+              <h3>Selamat Datang, <?php echo htmlspecialchars($_SESSION['nama']); ?> 😎</h3>
               <p>Informasi Keamanan Lingkungan</p>
             </div>
-            <div class="col-xl-6 ms-auto">
-              <div class="card mb-4 shadow">
-                <div class="card-header">
-                  <i class="fa-solid fa-chart-simple me-1"></i>
-                  Grafik
-                </div>
-                <div class="card-body"><canvas id="myPieChart" width="100%" height="50"></canvas></div>
-              </div>
-            </div>
+
           </div>
- 
+
           <div class="card mb-4 shadow">
             <div class="card-body">
               <h5 class="mb-3">📋 Jadwal Jaga Hari Ini</h5>
@@ -72,23 +67,18 @@
               </table>
             </div>
           </div>
-          
-          <div class="row">
-            <div class="col-xl-6">
-              <div class="card mb-4 shadow">
-                <div class="card-body">
-                  <h6 class="mb-4"><i class="fas fa-chart-bar me-2"></i>Grafik</h6>
-                  <canvas id="barChart" width="100%" height="50"></canvas>
 
-                </div>
+          <div class="row g-4">
+            <div class="col-md-8">
+              <div class="card p-3">
+                <h6 class="fw-semibold mb-3">Insiden 6 Bulan Terakhir</h6>
+                <canvas id="barChart" width="100%" height="40"></canvas>
               </div>
             </div>
-            <div class="col-xl-6 ms-auto">
-              <div class="card mb-4 shadow">
-                <div class="card-body">
-                  <h6 class="mb-4"><i class="fas fa-chart-pie me-2"></i>Grafik</h6>
-                  <canvas id="pieChart" width="100%" height="20"></canvas>
-                </div>
+            <div class="col-md-4">
+              <div class="card p-3">
+                <h6 class="fw-semibold mb-3">Distribusi Jenis Insiden</h6>
+                <canvas id="pieChart" width="100%" height="87"></canvas>
               </div>
             </div>
           </div>

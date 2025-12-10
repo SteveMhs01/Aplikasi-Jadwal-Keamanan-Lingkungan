@@ -3,7 +3,7 @@
     <nav class="sb-sidenav card shadow" style="height: 550px; border-radius: 30px; margin-top: 125px; margin-left: 10px;">
       <div class="sb-sidenav-menu">
         <div class="nav">
-          
+
           <h5 class="text-center">Sekuriti</h5>
           <hr class="me-2 ms-2">
           <a class="nav-link mt-1 text-black" href="dashboard-sekuriti.php">
@@ -42,7 +42,7 @@
   document.getElementById("logout").addEventListener("click", function(event) {
     event.preventDefault();
     Swal.fire({
-      title: 'Konfirmasi Logo',
+      title: 'Konfirmasi Logout',
       text: "Apakah Anda yakin ingin logout?",
       icon: 'warning',
       showCancelButton: true,
@@ -50,7 +50,7 @@
       cancelButtonText: 'Batal'
     }).then((result) => {
       if (result.isConfirmed) {
-        window.location.href = "../index.php";
+        window.location.href = "../logout.php";
       }
     });
   });

@@ -1,9 +1,9 @@
 <div id="layoutSidenav">
   <div id="layoutSidenav_nav">
-    <nav class="sb-sidenav card shadow" style="height: 550px; border-radius: 30px; margin-top: 125px; margin-left: 10px;">
+    <nav class="sb-sidenav card shadow" style="height: 560px; border-radius: 30px; margin-top: 115px; margin-left: 10px;">
       <div class="sb-sidenav-menu">
         <div class="nav">
-          
+
           <h5 class="text-center">RT</h5>
           <hr class="me-2 ms-2">
           <a class="nav-link mt-1 text-black" href="dashboard-rt.php">
@@ -17,6 +17,10 @@
           <a class="nav-link text-black" href="kelola-jadwal.php">
             <div class="sb-nav-link-icon"><i class="fa-solid fa-calendar-week"></i></div>
             Kelola Jadwal
+          </a>
+          <a class="nav-link text-black" href="notifikasi.php">
+            <div class="sb-nav-link-icon"><i class="fa-solid fa-bell"></i></div>
+            Notifikasi
           </a>
           <a class="nav-link collapsed text-black" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
             <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
@@ -57,7 +61,7 @@
   document.getElementById("logout").addEventListener("click", function(event) {
     event.preventDefault();
     Swal.fire({
-      title: 'Konfirmasi Logo',
+      title: 'Konfirmasi Logout',
       text: "Apakah Anda yakin ingin logout?",
       icon: 'warning',
       showCancelButton: true,
@@ -65,7 +69,7 @@
       cancelButtonText: 'Batal'
     }).then((result) => {
       if (result.isConfirmed) {
-        window.location.href = "../index.php";
+        window.location.href = "../logout.php";
       }
     });
   });
