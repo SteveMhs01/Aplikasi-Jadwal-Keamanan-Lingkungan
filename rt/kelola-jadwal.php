@@ -35,7 +35,7 @@ session_start();
           <!-- Tabel Jadwal -->
           <div class="card mt-4 mb-4 shadow">
             <div class="card-body">
-              <button type="button" class="btn btn-outline-success btn-sm mt-3 mb-4 shadow-sm" data-bs-toggle="modal" data-bs-target="#tambahAkunModal">
+              <button type="button" class="btn btn-outline-success btn-sm mt-3 mb-4 shadow-sm" data-bs-toggle="modal" data-bs-target="#tambahJadwalModal">
                 <i class="fas fa-circle-plus me-1"></i> Tambah Jadwal
               </button>
 
@@ -61,7 +61,6 @@ session_start();
                     ?>
                       <tr>
                         <td><?= $no++; ?></td>
-                        <td><?= $data['username']; ?></td>
                         <td><?= $data['password']; ?></td>
                         <td><?= $data['email']; ?></td>
                         <td><?= $data['nik']; ?></td>
@@ -71,9 +70,8 @@ session_start();
                         <td><?= $data['role']; ?></td>
                         <td class="text-center d-flex gap-2">
                           <!-- Tombol Edit -->
-                          <button class="btn btn-warning editAkun"
+                          <button class="btn btn-warning editJadwalModal"
                             data-id="<?= $data['id_pengguna']; ?>"
-                            data-username="<?= $data['username']; ?>"
                             data-email="<?= $data['email']; ?>"
                             data-nik="<?= $data['nik']; ?>"
                             data-nama="<?= $data['nama']; ?>"
