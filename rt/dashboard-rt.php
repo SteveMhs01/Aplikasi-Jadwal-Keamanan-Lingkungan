@@ -17,7 +17,6 @@
 
 <body class="sb-nav-fixed" style="background-color: #f9f6f6; ">
   <?php
-  session_start();
   include "../cek-login.php";
   cekRole("rt");
   include '../connection/connection.php';

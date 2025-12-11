@@ -31,38 +31,6 @@ if (isset($_POST['register'])) {
   }
 }
 
-// UPDATE AKUN
-if (isset($_POST['update'])) {
-
-  $id      = $_POST['id_pengguna'];
-  $nik      = $_POST['nik'];
-  $email    = $_POST['email'];
-  $nama     = $_POST['nama'];
-  $alamat   = $_POST['alamat'];
-  $no_hp    = $_POST['no_hp'];
-  $role     = $_POST['role'];
-
-  $query = "UPDATE tb_pengguna SET 
-                nik='$nik',
-                email='$email',
-                nama='$nama',
-                alamat='$alamat',
-                no_hp='$no_hp',
-                role='$role'
-              WHERE id_pengguna='$id'";
-
-  if (mysqli_query($koneksi, $query)) {
-
-    // berhasil → simpan session notif
-    $_SESSION['sukses_update'] = true;
-
-    // redirect tanpa output
-    header("Location: kelola-akun.php");
-    exit;
-  } else {
-    die("Gagal Update: " . mysqli_error($koneksi));
-  }
-}
 
 // INCLUDE SETELAH PHP SELESAI DAN INCLUDE SIDEBAR DAN NAVBAR
 include 'sideandnav/navbar.php';
@@ -169,12 +137,8 @@ include 'sideandnav/sidebar.php';
                     <tr>
                       <th>No</th>
                       <th>Nik</th>
-                      <th>Password</th>
-                      <th>Email</th>
                       <th>Nama</th>
-                      <th>Alamat</th>
-                      <th>No Hp</th>
-                      <th>Role</th>
+                      <th>Password</th>
                       <th>Aksi</th>
                     </tr>
                   </thead>
@@ -189,15 +153,11 @@ include 'sideandnav/sidebar.php';
                       <tr>
                         <td><?= $no++; ?></td>
                         <td><?= $data['nik']; ?></td>
-                        <td><?= $data['password']; ?></td>
-                        <td><?= $data['email']; ?></td>
                         <td><?= $data['nama']; ?></td>
-                        <td><?= $data['alamat']; ?></td>
-                        <td><?= $data['no_hp']; ?></td>
-                        <td><?= $data['role']; ?></td>
+                        <td>*******</td>
                         <td class="text-center d-flex gap-2">
-                          <!-- Tombol Edit -->
-                          <button class="btn btn-warning editAkun"
+                          <!-- Tombol Detail -->
+                          <button class="btn btn-primary DetailAkun"
                             data-id="<?= $data['id_pengguna']; ?>"
                             data-nik="<?= $data['nik']; ?>"
                             data-email="<?= $data['email']; ?>"
@@ -205,7 +165,7 @@ include 'sideandnav/sidebar.php';
                             data-alamat="<?= $data['alamat']; ?>"
                             data-nohp="<?= $data['no_hp']; ?>"
                             data-role="<?= $data['role']; ?>">
-                            <i class="fa fa-edit"></i>
+                            <i class="fa fa-eye"></i>
                           </button>
                           <!-- Tombol Hapus -->
                           <button class="btn btn-danger hapusAkun"
@@ -242,7 +202,7 @@ include 'sideandnav/sidebar.php';
                           <label class="form-label">NIK</label>
                           <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-id-card"></i></span>
-                            <input type="number" class="form-control" name="nik" placeholder="Nomor Induk Kependudukan" required>
+                            <input type="number" class="form-control" name="nik" placeholder="Nomor Induk Kependudukan">
                           </div>
                         </div>
 
@@ -250,7 +210,7 @@ include 'sideandnav/sidebar.php';
                           <label class="form-label">Password</label>
                           <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                            <input type="text" class="form-control" name="password" placeholder="Masukkan password" required>
+                            <input type="text" class="form-control" name="password" placeholder="Masukkan password">
                           </div>
                         </div>
 
@@ -258,7 +218,7 @@ include 'sideandnav/sidebar.php';
                           <label class="form-label">Email</label>
                           <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                            <input type="email" class="form-control" name="email" placeholder="Masukkan email" required>
+                            <input type="email" class="form-control" name="email" placeholder="Masukkan email">
                           </div>
                         </div>
 
@@ -271,7 +231,7 @@ include 'sideandnav/sidebar.php';
                           <label class="form-label">Nama</label>
                           <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
-                            <input type="text" class="form-control" name="nama" placeholder="Nama lengkap" required>
+                            <input type="text" class="form-control" name="nama" placeholder="Nama lengkap">
                           </div>
                         </div>
 
@@ -319,16 +279,16 @@ include 'sideandnav/sidebar.php';
             </div>
           </div>
 
-          <!-- MODAL EDIT AKUN -->
-          <div class="modal fade" id="modalEditAkun" tabindex="-1">
+          <!-- MODAL DETAIL AKUN -->
+          <div class="modal fade" id="modalDetailAkun" tabindex="-1">
             <div class="modal-dialog modal-lg modal-dialog-centered">
               <div class="modal-content rounded-3 shadow">
 
                 <form method="POST" action="">
                   <input type="hidden" name="id_pengguna" id="edit-id">
 
-                  <div class="modal-header bg-warning text-white">
-                    <h5>Edit Akun</h5>
+                  <div class="modal-header bg-primary text-white">
+                    <h5>Detail Pengguna</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                   </div>
 
@@ -374,7 +334,7 @@ include 'sideandnav/sidebar.php';
                           <label class="form-label">Alamat</label>
                           <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
-                            <input type="text" class="form-control" id="edit-alamat" name="alamat" placeholder="Alamat domisili" required>
+                            <textarea class="form-control" id="edit-alamat" name="alamat" placeholder="Alamat domisili"></textarea>
                           </div>
                         </div>
 
@@ -382,7 +342,7 @@ include 'sideandnav/sidebar.php';
                           <label class="form-label">No Hp</label>
                           <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                            <input type="number" class="form-control" id="edit-nohp" name="no_hp" placeholder="Nomor handphone" required>
+                            <input type="number" class="form-control" id="edit-nohp" name="no_hp" placeholder="Nomor handphone">
                           </div>
                         </div>
 
@@ -390,7 +350,7 @@ include 'sideandnav/sidebar.php';
                           <label class="form-label">Role</label>
                           <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-user-shield"></i></span>
-                            <select name="role" id="edit-role" class="form-control" required>
+                            <select name="role" id="edit-role" class="form-control">
                               <option value="">Pilih Role -</option>
                               <option value="rt">RT</option>
                               <option value="sekuriti">Sekuriti</option>
@@ -406,9 +366,6 @@ include 'sideandnav/sidebar.php';
 
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" name="update" class="btn btn-warning">
-                      Simpan Perubahan
-                    </button>
 
                   </div>
 
@@ -456,18 +413,20 @@ include 'sideandnav/sidebar.php';
       });
     });
 
-    // EDIT AKUN
-    $(".editAkun").click(function() {
-      $("#edit-id").val($(this).data('id'));
-      $("#edit-nik").val($(this).data('nik'));
-      $("#edit-email").val($(this).data('email'));
-      $("#edit-nama").val($(this).data('nama'));
-      $("#edit-alamat").val($(this).data('alamat'));
-      $("#edit-nohp").val($(this).data('nohp'));
-      $("#edit-role").val($(this).data('role'));
+    // DETAIL AKUN
+    $(".detailAkun").click(function() {
 
-      $("#modalEditAkun").modal("show");
+      $("#edit-id").val($(this).data('id')).prop("readonly", true);
+      $("#edit-nik").val($(this).data('nik')).prop("readonly", true);
+      $("#edit-email").val($(this).data('email')).prop("readonly", true);
+      $("#edit-nama").val($(this).data('nama')).prop("readonly", true);
+      $("#edit-alamat").val($(this).data('alamat')).prop("readonly", true);
+      $("#edit-nohp").val($(this).data('nohp')).prop("readonly", true);
+      $("#edit-role").val($(this).data('role')).prop("readonly", true);
+
+      $("#modalDetailAkun").modal("show");
     });
+
 
     // DELETE AKUN
     $(document).on('click', '.hapusAkun', function() {

@@ -137,11 +137,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['ubah_password'])) {
 
                 <div class="card p-4">
                   <div class="">
-                    <div class="col-md-3">
-                      <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Profile" class="profile-pic mb-5 w-100 h-100">
-
-                    </div>
-                    <hr class="mb-5">
 
                     <!-- Detail Akun -->
                     <div class="col-md-9 mb-2">
