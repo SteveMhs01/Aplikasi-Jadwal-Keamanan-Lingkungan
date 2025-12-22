@@ -8,7 +8,7 @@ if (isset($_POST['check_nik'])) {
   $nik = trim($_POST['nik']);
 
   $sql = "SELECT * FROM tb_pengguna WHERE nik='$nik'";
-  $result = $db->query($sql);
+  $result = $koneksi->query($sql);
 
   if ($result && $result->num_rows > 0) {
     $userData = $result->fetch_assoc();
@@ -19,15 +19,18 @@ if (isset($_POST['check_nik'])) {
 
 if (isset($_POST['reset_password'])) {
   $nik = $_POST['nik'];
-  $newPass = $_POST['password'];
+
+  $newPass = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
   $sql = "UPDATE tb_pengguna SET password='$newPass' WHERE nik='$nik'";
-  if ($db->query($sql)) {
-    $success = "Password berhasil diubah! Silakan login kembali.";
+
+  if ($koneksi->query($sql)) {
+    $success = true;
   } else {
     $error = "Gagal mengubah password.";
   }
 }
+
 ?>
 
 
@@ -58,6 +61,8 @@ if (isset($_POST['reset_password'])) {
 
 <body>
 
+
+
   <div class="container mt-5">
     <div class="row justify-content-center">
       <div class="col-md-5">
@@ -65,7 +70,21 @@ if (isset($_POST['reset_password'])) {
         <div class="card shadow p-4">
           <h3 class="text-center mb-3">Lupa Password</h3>
 
-          <!-- ALERT -->
+          <!-- ALERT SUCCESS + REDIRECT -->
+          <?php if (isset($success) && $success === true) : ?>
+            <script>
+              Swal.fire({
+                icon: "success",
+                title: "Berhasil!",
+                text: "Password berhasil diubah!",
+                confirmButtonText: "OK"
+              }).then(() => {
+                window.location.href = "login.php";
+              });
+            </script>
+          <?php endif; ?>
+
+          <!-- ALERT ERROR -->
           <?php if (isset($error)) : ?>
             <script>
               Swal.fire({
@@ -90,19 +109,21 @@ if (isset($_POST['reset_password'])) {
             </form>
           <?php endif; ?>
 
-          <!-- FORM GANTI PASSWORD -->
+          <!-- FORM RESET PASSWORD -->
           <?php if (isset($userData) && !isset($success)) : ?>
             <form method="POST">
               <div class="mb-3">
                 <label class="form-label">Nik</label>
                 <input type="text" class="form-control" value="<?= $userData['nik'] ?>" readonly>
                 <input type="hidden" name="nik" value="<?= $userData['nik'] ?>">
-                <input type="hidden" name="table" value="<?= $foundTable ?>">
               </div>
 
               <div class="mb-3">
                 <label class="form-label">Password Baru</label>
-                <input type="password" name="password" class="form-control" required>
+                <input type="password" name="password" class="form-control" id="password" required>
+                <button type="button" class="btn btn-outline-secondary mt-2" id="togglePass">
+                  👁️
+                </button>
               </div>
 
               <button type="submit" name="reset_password" class="btn btn-outline-success w-100">
@@ -119,6 +140,21 @@ if (isset($_POST['reset_password'])) {
       </div>
     </div>
   </div>
+
+
+  <script>
+    document.getElementById("togglePass").addEventListener("click", function() {
+      const passField = document.getElementById("password");
+
+      if (passField.type === "password") {
+        passField.type = "text";
+        this.textContent = "🙈"; // icon berubah saat ditampilkan
+      } else {
+        passField.type = "password";
+        this.textContent = "👁️";
+      }
+    });
+  </script>
 
 </body>
 
