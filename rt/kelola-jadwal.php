@@ -8,9 +8,13 @@ if (isset($_POST['simpan_jadwal'])) {
 
   // PASTIKAN id_pengguna ADA & ARRAY
   if (!isset($_POST['id_pengguna']) || !is_array($_POST['id_pengguna'])) {
-    echo "<script>alert('Silakan generate warga terlebih dahulu');</script>";
-    return;
+    echo "<script>
+            alert('Silakan generate warga terlebih dahulu');
+            window.location.href = 'kelola-jadwal.php';
+          </script>";
+    exit;
   }
+
 
   $pengguna = $_POST['id_pengguna'];
 

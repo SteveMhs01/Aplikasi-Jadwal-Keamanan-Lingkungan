@@ -249,7 +249,8 @@
                   data-nama="<?= $row['nama']; ?>"
                   data-deskripsi="<?= $row['deskripsi']; ?>"
                   data-tanggal="<?= $row['tanggal']; ?>"
-                  data-status="<?= $row['status']; ?>">
+                  data-status="<?= $row['status']; ?>"
+                  data-lokasi="<?= $row['lokasi']; ?>">
                   <i class="fa-solid fa-eye me-1"></i> Detail
                 </button>
               </div>
@@ -301,6 +302,14 @@
                           </div>
                         </div>
 
+                        <div class="mb-3">
+                          <label class="form-label">Lokasi Kejadian</label>
+                          <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                            <input type="text" class="form-control" id="lokasi" name="lokasi" placeholder="Lokasi" required>
+                          </div>
+                        </div>
+
                       </div>
 
                       <!-- KOLOM KANAN -->
@@ -310,7 +319,7 @@
                           <label class="form-label">Deskripsi</label>
                           <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-book"></i></span>
-                            <textarea name="deskripsi" id="deskripsi" class="form-control" style="height: 210px;"></textarea>
+                            <textarea name="deskripsi" id="deskripsi" class="form-control" style="height: 300px;"></textarea>
                           </div>
                         </div>
 
@@ -473,6 +482,7 @@
         document.getElementById("nama").value = this.dataset.nama;
         document.getElementById("deskripsi").value = this.dataset.deskripsi;
         document.getElementById("tanggal").value = this.dataset.tanggal;
+        document.getElementById("lokasi").value = this.dataset.lokasi;
         document.getElementById("status").value = statusMap[this.dataset.status] || this.dataset.status;
 
         // Tambahkan atribut readonly pada input modal
@@ -480,8 +490,7 @@
         document.getElementById("tanggal").setAttribute('readonly', true);
         document.getElementById("status").setAttribute('readonly', true);
         document.getElementById("deskripsi").setAttribute('readonly', true);
-
-
+        document.getElementById("lokasi").setAttribute('readonly', true);
         const modal = new bootstrap.Modal(
           document.getElementById("modalDetailPengaduan")
         );
