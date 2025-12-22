@@ -145,32 +145,30 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['ubah_password'])) {
                         <div class="col-md-6">
                           <label class="form-label fw-semibold">Nama Lengkap</label>
                           <input type="text" class="form-control" name="nama_lengkap"
-                            value="<?php echo $data['nama']; ?>">
+                            value="<?php echo $data['nama']; ?>" disabled>
                         </div>
-
-
 
                         <div class="col-md-6">
                           <label class="form-label fw-semibold">Email</label>
                           <input type="email" class="form-control" name="email"
-                            value="<?php echo $data['email']; ?>">
+                            value="<?php echo $data['email']; ?>" disabled>
                         </div>
 
                         <div class="col-md-6">
                           <label class="form-label fw-semibold">NIK</label>
                           <input type="text" class="form-control" name="nik"
-                            value="<?php echo $data['nik']; ?>">
-                        </div>
-
-                        <div class="col-md-6">
-                          <label class="form-label fw-semibold">Alamat</label>
-                          <textarea class="form-control" name="alamat" rows="2"><?php echo $data['alamat']; ?></textarea>
+                            value="<?php echo $data['nik']; ?>" disabled>
                         </div>
 
                         <div class="col-md-6">
                           <label class="form-label fw-semibold">Nomor Telepon</label>
                           <input type="text" class="form-control" name="telepon"
-                            value="<?php echo $data['no_hp']; ?>">
+                            value="<?php echo $data['no_hp']; ?>" disabled>
+                        </div>
+
+                        <div class="col-md-6">
+                          <label class="form-label fw-semibold">Alamat</label>
+                          <textarea class="form-control" name="alamat" rows="2" disabled><?php echo $data['alamat']; ?></textarea>
                         </div>
 
                       </div>
@@ -193,7 +191,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['ubah_password'])) {
                       <input type="password" name="password_baru" class="form-control" required>
                     </div>
                     <div class="col-md-4">
-                      <label class="form-label fw-semibold">Konfirmasi Password</label>
+                      <label class="form-label fw-semibold">Konfirmasi Password Baru</label>
                       <input type="password" name="konfirmasi_password" class="form-control" required>
                     </div>
                   </div>

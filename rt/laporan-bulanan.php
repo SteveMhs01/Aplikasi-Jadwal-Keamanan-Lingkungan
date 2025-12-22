@@ -154,7 +154,7 @@ $dataLaporan = mysqli_query(
             <div class="row g-4">
               <div class="col-md-8">
                 <div class="card p-3 shadow">
-                  <h6 class="fw-semibold mb-3">Insiden 6 Bulan Terakhir</h6>
+                  <h6 class="fw-semibold mb-3">Chart Insiden</h6>
                   <canvas id="barChart" width="100%" height="40"></canvas>
                 </div>
               </div>
