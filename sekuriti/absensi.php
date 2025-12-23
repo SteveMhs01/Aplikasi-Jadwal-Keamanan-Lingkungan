@@ -1,8 +1,8 @@
 <?php
 /* panggil koneksi ke database */
 // call ambulance call ambulance but not for me
+session_start();
 include '../connection/connection.php';
-
 ?>
 
 <!DOCTYPE html>
@@ -21,38 +21,42 @@ include '../connection/connection.php';
   <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
   <!-- data tables -->
   <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.bootstrap5.css">
-    <style>
-        .avatar-circle {
-            width: 45px;
-            height: 45px;
-            background: #7d5cff;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-        .card-custom {
-            border-radius: 18px;
-            box-shadow: 0 4px 18px rgba(0,0,0,0.08);
-        }
-        .btn-hadir {
-            background: #28a745;
-            color: white;
-        }
-        .btn-absen {
-            background: #dc3545;
-            color: white;
-        }
-        .header-bg {
-            border-radius: 18px 18px 0px 0px;
-            background: linear-gradient(to right, #2a71e8, #00c6ff);
-            color: white;
-            padding: 25px 10px;
-            text-align: center;
-        }
-    </style>
+  <style>
+    .avatar-circle {
+      width: 45px;
+      height: 45px;
+      background: #7d5cff;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .card-custom {
+      border-radius: 18px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+    }
+
+    .btn-hadir {
+      background: #28a745;
+      color: white;
+    }
+
+    .btn-absen {
+      background: #dc3545;
+      color: white;
+    }
+
+    .header-bg {
+      border-radius: 18px 18px 0px 0px;
+      background: linear-gradient(to right, #2a71e8, #00c6ff);
+      color: white;
+      padding: 25px 10px;
+      text-align: center;
+    }
+  </style>
 
 </head>
 
@@ -62,100 +66,94 @@ include '../connection/connection.php';
   include 'sideandnav/sidebar.php';
   include '../connection/connection.php';
 
+
+  $tanggal_hari_ini = date('Y-m-d');
+
+  $jadwal = mysqli_query($koneksi, "
+  SELECT 
+    j.id_jadwal,
+    jd.id_jadwal_detail,
+    p.id_pengguna,
+    p.nama,
+    jd.jam_masuk
+  FROM tb_jadwal j
+  JOIN tb_jadwal_detail jd ON j.id_jadwal = jd.id_jadwal
+  JOIN tb_pengguna p ON jd.id_pengguna = p.id_pengguna
+  WHERE j.tanggal = '$tanggal_hari_ini'
+    AND j.absensi_selesai = 0
+");
+
+  $jumlah = mysqli_num_rows($jadwal);
+
   ?>
+
   <div id="layoutSidenav">
     <div id="layoutSidenav_content">
       <main class="p-4">
-<div class="container py-5">
-    <div class="card card-custom">
+        <div class="container py-5">
+          <div class="card card-custom">
 
-        <div class="header-bg">
-            <h4 class="fw-bold">ABSENSI RONDA HARI INI</h4>
-            <small>Senin, 1 Oktober 2025</small>
+            <div class="header-bg">
+              <h4 class="fw-bold">ABSENSI RONDA HARI INI</h4>
+              <time><?= date('d F Y'); ?></time>
+            </div>
+
+            <?php if ($jumlah > 0) { ?>
+              <form method="POST" action="proses_absensi.php">
+
+                <?php while ($row = mysqli_fetch_assoc($jadwal)) { ?>
+
+                  <input type="hidden" name="id_pengguna[]" value="<?= $row['id_pengguna']; ?>">
+                  <input type="hidden" name="jam_masuk[]" value="<?= $row['jam_masuk']; ?>">
+
+                  <input type="hidden" name="id_jadwal" value="<?= $row['id_jadwal']; ?>">
+
+                  <div class="d-flex align-items-center justify-content-between p-2 border-bottom">
+                    <div class="d-flex align-items-center gap-3">
+                      <div class="avatar-circle">
+                        <?= strtoupper(substr($row['nama'], 0, 1)); ?>
+                      </div>
+                      <div>
+                        <strong><?= htmlspecialchars($row['nama']); ?></strong><br>
+                        <small><?= date('H:i', strtotime($row['jam_masuk'])); ?></small>
+                      </div>
+                    </div>
+
+                    <div>
+                      <select name="status_absensi[]" class="form-select form-select-sm" required>
+                        <option value="">Pilih</option>
+                        <option value="Hadir">Hadir</option>
+                        <option value="Tidak Hadir">Tidak Hadir</option>
+                      </select>
+                    </div>
+                  </div>
+
+                <?php } ?>
+
+                <div class="p-3">
+                  <label class="form-label fw-bold">Keterangan Absensi</label>
+                  <textarea
+                    name="keterangan"
+                    class="form-control"
+                    placeholder="Contoh: hujan deras"
+                    required></textarea>
+                </div>
+
+                <button type="submit" name="simpan_absensi" class="btn btn-success mt-3 mb-3 mx-3">
+                  Simpan Absensi Hari Ini
+                </button>
+
+              </form>
+
+            <?php } else { ?>
+              <div class="alert alert-warning text-center mt-4">
+                <i class="fa-solid fa-calendar-xmark fa-2x mb-2"></i><br>
+                <strong>Tidak ada jadwal ronda hari ini</strong>
+              </div>
+            <?php } ?>
+
+          </div>
         </div>
-
-        <div class="p-3">
-
-            <!-- ITEM -->
-            <div class="d-flex align-items-center justify-content-between p-2 border-bottom">
-                <div class="d-flex align-items-center gap-3">
-                    <div class="avatar-circle">A</div>
-                    <div>
-                        <strong>Nama</strong><br>
-                        <small>19:00 - 03:00</small><br>
-                        <small class="text-secondary">BELUM ABSEN</small>
-                    </div>
-                </div>
-                <div class="d-flex gap-2">
-                    <button class="btn btn-sm btn-hadir">Hadir</button>
-                    <button class="btn btn-sm btn-absen">Tidak hadir</button>
-                </div>
-            </div>
-
-            <!-- COPY BERGERAK KE BAWAH -->
-            <div class="d-flex align-items-center justify-content-between p-2 border-bottom">
-                <div class="d-flex align-items-center gap-3">
-                    <div class="avatar-circle">B</div>
-                    <div>
-                        <strong>Nama</strong><br>
-                        <small>19:00 - 03:00</small><br>
-                        <small class="text-secondary">BELUM ABSEN</small>
-                    </div>
-                </div>
-                <div class="d-flex gap-2">
-                    <button class="btn btn-sm btn-hadir">Hadir</button>
-                    <button class="btn btn-sm btn-absen">Tidak hadir</button>
-                </div>
-            </div>
-
-            <div class="d-flex align-items-center justify-content-between p-2 border-bottom">
-                <div class="d-flex align-items-center gap-3">
-                    <div class="avatar-circle">C</div>
-                    <div>
-                        <strong>Nama</strong><br>
-                        <small>19:00 - 03:00</small><br>
-                        <small class="text-secondary">BELUM ABSEN</small>
-                    </div>
-                </div>
-                <div class="d-flex gap-2">
-                    <button class="btn btn-sm btn-hadir">Hadir</button>
-                    <button class="btn btn-sm btn-absen">Tidak hadir</button>
-                </div>
-            </div>
-
-            <div class="d-flex align-items-center justify-content-between p-2 border-bottom">
-                <div class="d-flex align-items-center gap-3">
-                    <div class="avatar-circle">D</div>
-                    <div>
-                        <strong>Nama</strong><br>
-                        <small>19:00 - 03:00</small><br>
-                        <small class="text-secondary">BELUM ABSEN</small>
-                    </div>
-                </div>
-                <div class="d-flex gap-2">
-                    <button class="btn btn-sm btn-hadir">Hadir</button>
-                    <button class="btn btn-sm btn-absen">Tidak hadir</button>
-                </div>
-            </div>
-
-            <div class="d-flex align-items-center justify-content-between p-2">
-                <div class="d-flex align-items-center gap-3">
-                    <div class="avatar-circle">E</div>
-                    <div>
-                        <strong>Nama</strong><br>
-                        <small>19:00 - 03:00</small><br>
-                        <small class="text-secondary">BELUM ABSEN</small>
-                    </div>
-                </div>
-                <div class="d-flex gap-2">
-                    <button class="btn btn-sm btn-hadir">Hadir</button>
-                    <button class="btn btn-sm btn-absen">Tidak hadir</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
       </main>
 
     </div>
@@ -170,89 +168,21 @@ include '../connection/connection.php';
     integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
     crossorigin="anonymous"></script>
   <script src="../js/scripts.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-  <script src="../assets/demo/chart-bar-demo.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
-    crossorigin="anonymous"></script>
   <script type="text/javascript" src="../sweetalert/sweetalert2.all.min.js"></script>
-  <!-- data table -->
-  <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
-  <script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap5.js"></script>
-  <script>
-    $(document).ready(function () {
-      $('#tabelSekuriti').DataTable({
-        "language": {
-          "search": "<i class='fa-solid fa-magnifying-glass'></i> ",
-          "lengthMenu": "Tampilkan _MENU_ data per halaman",
-          "zeroRecords": "Data tidak ditemukan",
-          "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-          "infoEmpty": "Tidak ada data tersedia",
-          "infoFiltered": "(disaring dari total _MAX_ data)"
-        },
-        "pageLength": 5,
-        "lengthMenu": [5, 10, 25, 50]
-      });
-    });
-
-    $(document).ready(function () {
-      $('#tabelWarga').DataTable({
-        "language": {
-          "search": "<i class='fa-solid fa-magnifying-glass'></i> ",
-          "lengthMenu": "Tampilkan _MENU_ data per halaman",
-          "zeroRecords": "Data tidak ditemukan",
-          "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-          "infoEmpty": "Tidak ada data tersedia",
-          "infoFiltered": "(disaring dari total _MAX_ data)"
-        },
-        "pageLength": 5,
-        "lengthMenu": [5, 10, 25, 50]
-      });
-    });
-
-    document.getElementById("hapusSekuriti<?= $no - 1 ?>").addEventListener("click", function (event) {
-      event.preventDefault();
+  <?php if (isset($_SESSION['success_absensi'])): ?>
+    <script>
       Swal.fire({
-        title: 'Konfirmasi Hapus',
-        text: "Apakah Anda yakin ingin menghapus akun ini?",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Hapus',
-        cancelButtonText: 'Batal'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire(
-            'Dihapus!',
-            'Data telah dihapus.',
-            'success'
-          )
-        }
+        icon: 'success',
+        title: 'Absensi Berhasil',
+        text: 'Absensi hari ini berhasil disimpan',
+        confirmButtonColor: '#28a745',
+        timer: 2000,
+        showConfirmButton: false
       });
-    });
+    </script>
+  <?php unset($_SESSION['success_absensi']);
+  endif; ?>
 
-    document.getElementById("hapusWarga<?= $no - 1 ?>").addEventListener("click", function (event) {
-      event.preventDefault();
-      Swal.fire({
-        title: 'Konfirmasi Hapus',
-        text: "Apakah Anda yakin ingin menghapus akun ini?",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Hapus',
-        cancelButtonText: 'Batal'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire(
-            'Dihapus!',
-            'Data telah dihapus.',
-            'success'
-          )
-        }
-      });
-    });
-  </script>
 </body>
 
 </html>

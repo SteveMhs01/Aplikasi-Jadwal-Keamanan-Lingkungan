@@ -18,10 +18,6 @@
             <div class="sb-nav-link-icon"><i class="fa-solid fa-calendar-week"></i></div>
             Kelola Jadwal
           </a>
-          <a class="nav-link text-black" href="notifikasi.php">
-            <div class="sb-nav-link-icon"><i class="fa-solid fa-bell"></i></div>
-            Notifikasi
-          </a>
           <a class="nav-link collapsed text-black" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
             <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
             Laporan
