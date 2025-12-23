@@ -110,7 +110,15 @@
   $persenValid = $total > 0 ? round(($valid / $total) * 100) : 0;
 
   // Query daftar laporan
-  $query = mysqli_query($koneksi, "SELECT * FROM tb_pengaduan_insiden ORDER BY id_pengaduan DESC");
+  $query = mysqli_query($koneksi, "
+  SELECT 
+    pi.*, 
+    u.nama 
+  FROM tb_pengaduan_insiden pi
+  JOIN tb_pengguna u ON pi.id_pengguna = u.id_pengguna
+  ORDER BY pi.id_pengaduan DESC
+");
+
 
 
   ?>
@@ -246,7 +254,7 @@
                 <?php endif; ?>
                 <button class="btn-detail btn-sm modalDetail"
                   data-id="<?= $row['id_pengaduan']; ?>"
-                  data-nama="<?= $row['nama']; ?>"
+                  data-nama="<?= htmlspecialchars($row['nama']); ?>"
                   data-deskripsi="<?= $row['deskripsi']; ?>"
                   data-tanggal="<?= $row['tanggal']; ?>"
                   data-status="<?= $row['status']; ?>"
@@ -293,12 +301,15 @@
                             <input type="text" class="form-control" id="tanggal" name="tanggal" placeholder="Nomor handphone" required>
                           </div>
                         </div>
+                      </div>
 
+                      <!-- KOLOM KANAN -->
+                      <div class="col-md-6 col-divider">
                         <div class="mb-3">
                           <label class="form-label">Status</label>
                           <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-clock"></i></span>
-                            <input type="text" class="form-control" id="status" name="status" placeholder="Nomor handphone" required>
+                            <input type="text" class="form-control" id="status" name="status" placeholder="Status" required>
                           </div>
                         </div>
 
@@ -309,20 +320,14 @@
                             <input type="text" class="form-control" id="lokasi" name="lokasi" placeholder="Lokasi" required>
                           </div>
                         </div>
-
                       </div>
 
-                      <!-- KOLOM KANAN -->
-                      <div class="col-md-6 col-divider">
-
-                        <div class="mb-3">
-                          <label class="form-label">Deskripsi</label>
-                          <div class="input-group">
-                            <span class="input-group-text"><i class="fas fa-book"></i></span>
-                            <textarea name="deskripsi" id="deskripsi" class="form-control" style="height: 300px;"></textarea>
-                          </div>
+                      <div class="mb-3">
+                        <label class="form-label">Deskripsi</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="fas fa-book"></i></span>
+                          <textarea name="deskripsi" id="deskripsi" class="form-control" style="height: 300px;"></textarea>
                         </div>
-
                       </div>
 
                     </div>

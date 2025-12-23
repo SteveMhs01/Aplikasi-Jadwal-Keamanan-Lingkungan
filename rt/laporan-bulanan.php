@@ -138,8 +138,15 @@ $dataLaporan = mysqli_query(
                       <tr>
                         <td><?= $row['nama'] ?></td>
                         <td><?= date('d M Y', strtotime($row['tanggal'])) ?></td>
+                        <?php
+                        $badgeClass = match ($row['status']) {
+                          'diterima' => 'bg-success',
+                          'ditolak'  => 'bg-danger',
+                          default    => 'bg-warning text-dark',
+                        };
+                        ?>
                         <td>
-                          <span class="badge <?= $row['status'] == 'valid' ? 'bg-success' : ($row['status'] == 'ditolak' ? 'bg-danger' : 'bg-warning') ?>">
+                          <span class="badge <?= $badgeClass ?>">
                             <?= ucfirst($row['status']) ?>
                           </span>
                         </td>

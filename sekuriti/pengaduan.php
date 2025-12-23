@@ -1,66 +1,56 @@
 <?php
-include '../connection/connection.php';
 session_start();
+include '../connection/connection.php';
 
-// Pastikan pengguna login (sesuaikan sesuai struktur login Anda)
-$id_pengguna = $_SESSION['id_pengguna'] ?? null;
+/* ===============================
+   CEK LOGIN
+================================ */
+if (!isset($_SESSION['id_pengguna'])) {
+  header("Location: ../login.php");
+  exit;
+}
 
+$id_pengguna = $_SESSION['id_pengguna'];
+
+/* ===============================
+   AMBIL NAMA USER
+================================ */
+$user = mysqli_fetch_assoc(
+  mysqli_query($koneksi, "SELECT nama FROM tb_pengguna WHERE id_pengguna='$id_pengguna'")
+);
+$nama = $user['nama'] ?? '';
+
+/* ===============================
+   PROSES KIRIM LAPORAN
+================================ */
 if (isset($_POST['kirim'])) {
-
-  // Ambil data input
-  $lokasi = mysqli_real_escape_string($koneksi, $_POST['lokasi']);
-  $tanggal = mysqli_real_escape_string($koneksi, $_POST['tanggal']);
+  $lokasi    = mysqli_real_escape_string($koneksi, $_POST['lokasi']);
+  $tanggal   = mysqli_real_escape_string($koneksi, $_POST['tanggal']);
   $deskripsi = mysqli_real_escape_string($koneksi, $_POST['deskripsi']);
 
-  // Validasi pengguna login
-  if (!$id_pengguna) {
-    echo "<script>
-                alert('Anda harus login untuk melaporkan insiden.');
-                window.location.href = '../login.php';
-              </script>";
+  $insert = mysqli_query($koneksi, "
+    INSERT INTO tb_pengaduan_insiden
+    (id_pengguna, nama, lokasi, tanggal, deskripsi, status)
+    VALUES
+    ('$id_pengguna','$nama','$lokasi','$tanggal','$deskripsi','diproses')
+  ");
+
+  if ($insert) {
+    $_SESSION['success'] = "Laporan berhasil dikirim";
+    header("Location: pengaduan.php");
     exit;
-  }
-
-  // Insert ke tabel pengaduan utama
-  $query_pengaduan = "
-        INSERT INTO tb_pengaduan_insiden (id_pengguna, lokasi, tanggal, deskripsi, status)
-        VALUES ('$id_pengguna', '$lokasi', '$tanggal', '$deskripsi', 'Menunggu Validasi')
-    ";
-
-  if (mysqli_query($koneksi, $query_pengaduan)) {
-
-    // Ambil id_pengaduan terakhir
-    $id_pengaduan = mysqli_insert_id($koneksi);
-
-    // SweetAlert sukses
-    echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
-              <script>
-                Swal.fire({
-                  title: 'Berhasil!',
-                  text: 'Laporan insiden Anda berhasil dikirim.',
-                  icon: 'success',
-                  confirmButtonText: 'OK'
-                }).then(() => {
-                  window.location.href = 'pengaduan.php';
-                });
-              </script>";
-    exit;
-  } else {
-
-    // SweetAlert gagal
-    echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
-              <script>
-                Swal.fire({
-                  title: 'Gagal!',
-                  text: 'Terjadi kesalahan saat mengirim laporan.',
-                  icon: 'error',
-                  confirmButtonText: 'OK'
-                });
-              </script>";
   }
 }
-?>
 
+/* ===============================
+   DATA LAPORAN
+================================ */
+$laporan = mysqli_query($koneksi, "
+  SELECT * FROM tb_pengaduan_insiden
+  WHERE id_pengguna='$id_pengguna'
+  ORDER BY id_pengaduan DESC
+");
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -71,14 +61,11 @@ if (isset($_POST['kirim'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <meta name="description" content="" />
   <meta name="author" content="" />
-  <title>Dashboard</title>
+  <title>Form Pengaduan</title>
   <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
   <link href="../css/styles.css" rel="stylesheet" />
   <link rel="stylesheet" href="sweetalert/sweetalert2.css">
   <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-  <!-- data tables -->
-  <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.bootstrap5.css">
-
 
 </head>
 
@@ -86,13 +73,21 @@ if (isset($_POST['kirim'])) {
   <?php
   include 'sideandnav/navbar.php';
   include 'sideandnav/sidebar.php';
-  include '../connection/connection.php';
-
   ?>
   <div id="layoutSidenav">
     <div id="layoutSidenav_content">
       <main class="p-4">
         <div class="container-fluid px-4">
+
+          <!-- ALERT SUKSES -->
+          <?php if (isset($_SESSION['success'])): ?>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script>
+              Swal.fire('Berhasil!', '<?= $_SESSION['success'] ?>', 'success');
+            </script>
+          <?php unset($_SESSION['success']);
+          endif; ?>
+
           <div class="container mt-4">
             <div class="card shadow rounded-3">
               <div class="card-body">
@@ -101,164 +96,197 @@ if (isset($_POST['kirim'])) {
                   Sampaikan laporan insiden yang terjadi di lingkungan Anda. Data Anda akan kami jaga kerahasiaannya.
                 </p>
 
-                <form method="POST" action="">
-
-
-                  <!-- Lokasi -->
-                  <div class="form-group mb-3">
-                    <label for="lokasi" class="form-label">Lokasi Kejadian</label>
-                    <input type="text" class="form-control" id="lokasi" name="lokasi"
-                      placeholder="Contoh: Jl. Merdeka No. 123, Depan SDN 1..." required>
+                <form method="POST">
+                  <div class="mb-3">
+                    <label>Lokasi Kejadian</label>
+                    <input type="text" name="lokasi" class="form-control" placeholder="Contoh. Jl. Merdeka No 123" required>
                   </div>
 
-                  <!-- Tanggal Kejadian -->
-                  <div class="row mb-3">
-                    <div class="col-md-6">
-                      <label for="tanggal" class="form-label">Tanggal Kejadian</label>
-                      <input type="date" class="form-control" id="tanggal" name="tanggal" required>
-                    </div>
-
+                  <div class="mb-3">
+                    <label>Tanggal Kejadian</label>
+                    <input type="date" name="tanggal" class="form-control" required>
                   </div>
 
-                  <!-- Deskripsi -->
-                  <div class="form-group mb-3">
-                    <label for="deskripsi" class="form-label">Deskripsi Insiden</label>
-                    <textarea class="form-control" id="deskripsi" name="deskripsi" rows="4"
-                      placeholder="Jelaskan secara detail kejadian, pihak yang terlibat, dan kondisi saat ini..."
-                      required></textarea>
+                  <div class="mb-3">
+                    <label>Deskripsi Insiden</label>
+                    <textarea name="deskripsi" class="form-control" placeholder="Jelaskan secara detail apa yang terjadi, kronologi kejadian,pihak yang terlibat, dan kondisi terkini" rows="4" required></textarea>
                   </div>
 
-                  <!-- Tombol -->
-                  <div class="d-flex justify-content-end mt-4">
-                    <button type="submit" name="kirim" class="btn btn-primary">
-                      <i class="bi bi-send"></i> Kirim Laporan
+                  <div class="text-end">
+                    <button name="kirim" class="btn btn-primary">
+                      <i class="fa-solid fa-paper-plane"></i> Kirim Laporan
                     </button>
                   </div>
                 </form>
               </div>
             </div>
-            <div class="card shadow rounded-3 mt-3">
+
+            <!-- TABEL -->
+            <div class="card shadow mt-3">
               <div class="card-body">
+                <table class="table table-hover text-center">
+                  <thead class="table-light">
+                    <tr>
+                      <th>No</th>
+                      <th>Tanggal</th>
+                      <th>Status</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
 
+                  <tbody>
+                    <?php
+                    $limit = 4;
+                    $page  = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                    $start = ($page - 1) * $limit;
 
-                <!-- Tabel Pengaduan -->
-                <div class="table-responsive">
-                  <table class="table table-borderedless table-hover align-middle">
-                    <thead class="table-light text-center">
-                      <tr>
-                        <th>No</th>
-                        <th>Tanggal</th>
-                        <th>Status Laporan</th>
-                        <th>Aksi</th>
-                      </tr>
-                    </thead>
-                    <tbody class="text-center">
-                      <?php
-                      $id_pengguna = $_SESSION['id_pengguna']; // dari session login
+                    $totalData = mysqli_fetch_assoc(
+                      mysqli_query($koneksi, "SELECT COUNT(*) total FROM tb_pengaduan_insiden WHERE id_pengguna='$id_pengguna'")
+                    )['total'];
+
+                    $totalPage = ceil($totalData / $limit);
+                    $laporan = mysqli_query($koneksi, "
+                    SELECT * FROM tb_pengaduan_insiden
+                    WHERE id_pengguna='$id_pengguna'
+                    ORDER BY id_pengaduan DESC
+                    LIMIT $start, $limit
+                  ");
+                    ?>
+
+                    <?php if (mysqli_num_rows($laporan) > 0):
                       $no = 1;
+                      while ($row = mysqli_fetch_assoc($laporan)): ?>
+                        <tr>
+                          <td><?= $no++ ?></td>
+                          <td><?= date('d-m-Y', strtotime($row['tanggal'])) ?></td>
+                          <td>
+                            <?=
+                            match ($row['status']) {
+                              'diterima' => "<span class='badge bg-success'>Diterima</span>",
+                              'ditolak'  => "<span class='badge bg-danger'>Ditolak</span>",
+                              default    => "<span class='badge bg-warning text-dark'>Diproses</span>",
+                            }
+                            ?>
+                          </td>
+                          <td>
+                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                              data-bs-target="#modal<?= $row['id_pengaduan'] ?>">
+                              <i class="fa fa-eye"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      <?php endwhile;
+                    else: ?>
+                      <tr>
+                        <td colspan="4">Belum ada laporan</td>
+                      </tr>
+                    <?php endif; ?>
+                  </tbody>
+                </table>
+                <nav>
+                  <ul class="pagination justify-content-center">
+                    <?php for ($i = 1; $i <= $totalPage; $i++): ?>
+                      <li class="page-item <?= ($i == $page) ? 'active' : '' ?>">
+                        <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                      </li>
+                    <?php endfor; ?>
+                  </ul>
+                </nav>
 
-                      $query = "SELECT * FROM tb_pengaduan_insiden WHERE id_pengguna = '$id_pengguna' ORDER BY id_pengaduan DESC";
-                      $result = mysqli_query($koneksi, $query);
-
-                      if (mysqli_num_rows($result) > 0) {
-                        while ($row = mysqli_fetch_assoc($result)) {
-
-                          // Format tanggal
-                          $tanggal = date("d-m-Y", strtotime($row['tanggal']));
-
-                          // Badge status
-                          $status = $row['status'];
-                          $badge = "";
-
-                          if ($status == "Ditolak") {
-                            $badge = "<span class='badge badge-soft text-danger'><i class='fa-solid fa-xmark me-1'></i>Ditolak</span>";
-                          } elseif ($status == "Menunggu Validasi") {
-                            $badge = "<span class='badge badge-soft text-primary'><i class='fa-solid fa-clock me-1'></i>Menunggu Validasi</span>";
-                          } elseif ($status == "Diproses") {
-                            $badge = "<span class='badge badge-soft text-warning'><i class='fa-solid fa-spinner me-1'></i>Diproses</span>";
-                          } elseif ($status == "Disetujui") {
-                            $badge = "<span class='badge badge-soft text-success'><i class='fa-solid fa-check me-1'></i>Disetujui</span>";
-                          }
-
-                      ?>
-                          <tr>
-                            <td><?= $no++; ?></td>
-                            <td><?= $tanggal; ?></td>
-                            <td><?= $badge; ?></td>
-                            <td>
-                              <!-- Lihat detail -->
-                              <button
-                                class="btn btn-primary btn-sm"
-                                data-bs-toggle="modal"
-                                data-bs-target="#modalDetail<?= $row['id_pengaduan']; ?>">
-                                <i class="fas fa-eye"></i>
-                              </button>
-
-
-                            </td>
-                          </tr>
-
-                      <?php
-                        }
-                      } else {
-                        echo "<tr><td colspan='4'>Belum ada laporan insiden</td></tr>";
-                      }
-                      ?>
-                    </tbody>
-
-                  </table>
-
-                </div>
               </div>
+            </div>
 
-              <!-- Modal Detai Pengaduan (contoh, strukturnya sama) -->
-              <?php
-              $result = mysqli_query($koneksi, $query);
-              while ($row = mysqli_fetch_assoc($result)) {
-              ?>
-                <div class="modal fade" id="modalDetail<?= $row['id_pengaduan']; ?>" tabindex="-1">
-                  <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content rounded-3 shadow">
-                      <div class="modal-header bg-primary text-dark">
-                        <h5 class="modal-title">Detail Pengaduan</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                      </div>
 
-                      <div class="modal-body">
-                        <p><strong>Lokasi:</strong> <?= $row['lokasi']; ?></p>
-                        <p><strong>Tanggal:</strong> <?= date("d-m-Y", strtotime($row['tanggal'])); ?></p>
-                        <p><strong>Deskripsi:</strong><br><?= $row['deskripsi']; ?></p>
-                        <p><strong>Status:</strong> <?= $row['status']; ?></p>
+            <!-- MODAL DETAIL -->
+            <?php
+            mysqli_data_seek($laporan, 0);
+            while ($row = mysqli_fetch_assoc($laporan)):
+            ?>
+              <div class="modal fade" id="modal<?= $row['id_pengaduan'] ?>">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header bg-primary text-white">
+                      <h5>Detail Pengaduan</h5>
+                      <button class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="row g-3">
+
+                        <!-- Nama -->
+                        <div class="col-md-6">
+                          <label class="form-label">Nama</label>
+                          <div class="input-group">
+                            <span class="input-group-text">
+                              <i class="fa-solid fa-user"></i>
+                            </span>
+                            <input type="text" class="form-control" value="<?= $row['nama'] ?>" readonly>
+                          </div>
+                        </div>
+
+                        <!-- Status -->
+                        <div class="col-md-6">
+                          <label class="form-label">Status</label>
+                          <div class="input-group">
+                            <span class="input-group-text">
+                              <i class="fa-solid fa-clock"></i>
+                            </span>
+                            <input type="text" class="form-control" value="<?= ucfirst($row['status']) ?>" readonly>
+                          </div>
+                        </div>
+
+                        <!-- Tanggal -->
+                        <div class="col-md-6">
+                          <label class="form-label">Tanggal</label>
+                          <div class="input-group">
+                            <span class="input-group-text">
+                              <i class="fa-solid fa-calendar"></i>
+                            </span>
+                            <input type="text" class="form-control"
+                              value="<?= date('Y-m-d', strtotime($row['tanggal'])) ?>" readonly>
+                          </div>
+                        </div>
+
+                        <!-- Lokasi -->
+                        <div class="col-md-6">
+                          <label class="form-label">Lokasi Kejadian</label>
+                          <div class="input-group">
+                            <span class="input-group-text">
+                              <i class="fa-solid fa-location-dot"></i>
+                            </span>
+                            <input type="text" class="form-control" value="<?= $row['lokasi'] ?>" readonly>
+                          </div>
+                        </div>
+
+                        <!-- Deskripsi -->
+                        <div class="col-12">
+                          <label class="form-label">Deskripsi</label>
+                          <div class="input-group">
+                            <span class="input-group-text">
+                              <i class="fa-solid fa-file-lines"></i>
+                            </span>
+                            <textarea class="form-control" rows="6" readonly><?= $row['deskripsi'] ?></textarea>
+                          </div>
+                        </div>
+
                       </div>
                     </div>
+
                   </div>
                 </div>
-              <?php } ?>
+              </div>
+            <?php endwhile; ?>
 
 
-            </div>
           </div>
         </div>
     </div>
-    </main>
+  </div>
+  </main>
   </div>
   </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-    integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
-    integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
-    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
   <script src="../js/scripts.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-  <script src="../assets/demo/chart-bar-demo.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
-    crossorigin="anonymous"></script>
   <script type="text/javascript" src="../sweetalert/sweetalert2.all.min.js"></script>
-
 </body>
 
 </html>
