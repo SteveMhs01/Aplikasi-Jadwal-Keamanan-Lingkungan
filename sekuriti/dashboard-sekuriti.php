@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <meta name="description" content="" />
   <meta name="author" content="" />
-  <title>Dashboard RT</title>
+  <title>Dashboard Sekuriti</title>
   <link href="../css/styles.css" rel="stylesheet" />
   <link rel="stylesheet" href="sweetalert/sweetalert2.css">
   <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -113,7 +113,8 @@
             <div class="">
               <div class="card mb-4 shadow">
                 <div class="card-body">
-                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur neque delectus provident est ex laboriosam accusantium harum. Ipsa nisi beatae laboriosam officia, sunt iusto ex obcaecati consequatur dicta reiciendis eligendi nulla est rem sit eum? Accusantium voluptatem quae unde eaque nisi, aut necessitatibus asperiores voluptates officiis eos cum velit optio voluptate tempore ad animi natus mollitia omnis dicta consectetur sit a sequi nulla quas! Molestiae ducimus repellendus a! Reiciendis quas quam et possimus officiis nostrum eligendi? Similique officiis nemo culpa impedit veritatis voluptates commodi odio pariatur ipsum quibusdam accusantium temporibus porro et suscipit, fugit molestias, necessitatibus itaque alias sed quam!</p>
+                  <p><b> Datang di Dashboard Sekuriti</b> <br>
+Sistem ini disediakan untuk mendukung pelaksanaan tugas pengamanan lingkungan secara tertib, terstruktur, dan profesional.</p>
                 </div>
               </div>
             </div>
