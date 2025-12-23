@@ -336,10 +336,11 @@ if (isset($_POST['import_excel'])) {
                               <?= $label ?>
                             </div>
                             <a href="hapus_jadwal.php?id=<?= $jadwal['id_jadwal']; ?>"
-                              class="btn btn-sm btn-danger"
-                              onclick="return confirm('Yakin ingin menghapus jadwal ini beserta seluruh warga di dalamnya?')">
+                              class="btn btn-sm btn-danger btn-hapus"
+                              data-id="<?= $jadwal['id_jadwal']; ?>">
                               <i class="fa-solid fa-trash"></i>
                             </a>
+
                           </div>
 
                           <div class="mb-3">
@@ -534,6 +535,31 @@ if (isset($_POST['import_excel'])) {
   <script src="../js/scripts.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
   <script type="text/javascript" src="../sweetalert/sweetalert2.all.min.js"></script>
+  <script>
+    document.querySelectorAll('.btn-hapus').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault(); // cegah langsung ke link
+
+        const url = this.getAttribute('href');
+
+        Swal.fire({
+          title: 'Yakin ingin menghapus?',
+          text: 'Jadwal dan seluruh warga di dalamnya akan terhapus permanen!',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Ya, hapus!',
+          cancelButtonText: 'Batal'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = url; // lanjut hapus
+          }
+        });
+      });
+    });
+  </script>
+
 </body>
 
 </html>
