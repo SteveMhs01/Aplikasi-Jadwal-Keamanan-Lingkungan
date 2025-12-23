@@ -1,9 +1,66 @@
 <?php
-/* panggil koneksi ke database */
-// call ambulance call ambulance but not for me
 include '../connection/connection.php';
+session_start();
 
+// Pastikan pengguna login (sesuaikan sesuai struktur login Anda)
+$id_pengguna = $_SESSION['id_pengguna'] ?? null;
+
+if (isset($_POST['kirim'])) {
+
+  // Ambil data input
+  $lokasi = mysqli_real_escape_string($koneksi, $_POST['lokasi']);
+  $tanggal = mysqli_real_escape_string($koneksi, $_POST['tanggal']);
+  $deskripsi = mysqli_real_escape_string($koneksi, $_POST['deskripsi']);
+
+  // Validasi pengguna login
+  if (!$id_pengguna) {
+    echo "<script>
+                alert('Anda harus login untuk melaporkan insiden.');
+                window.location.href = '../login.php';
+              </script>";
+    exit;
+  }
+
+  // Insert ke tabel pengaduan utama
+  $query_pengaduan = "
+        INSERT INTO tb_pengaduan_insiden (id_pengguna, lokasi, tanggal, deskripsi, status)
+        VALUES ('$id_pengguna', '$lokasi', '$tanggal', '$deskripsi', 'Menunggu Validasi')
+    ";
+
+  if (mysqli_query($koneksi, $query_pengaduan)) {
+
+    // Ambil id_pengaduan terakhir
+    $id_pengaduan = mysqli_insert_id($koneksi);
+
+    // SweetAlert sukses
+    echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+              <script>
+                Swal.fire({
+                  title: 'Berhasil!',
+                  text: 'Laporan insiden Anda berhasil dikirim.',
+                  icon: 'success',
+                  confirmButtonText: 'OK'
+                }).then(() => {
+                  window.location.href = 'pengaduan.php';
+                });
+              </script>";
+    exit;
+  } else {
+
+    // SweetAlert gagal
+    echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+              <script>
+                Swal.fire({
+                  title: 'Gagal!',
+                  text: 'Terjadi kesalahan saat mengirim laporan.',
+                  icon: 'error',
+                  confirmButtonText: 'OK'
+                });
+              </script>";
+  }
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -45,7 +102,7 @@ include '../connection/connection.php';
                 </p>
 
                 <form method="POST" action="">
-                  
+
 
                   <!-- Lokasi -->
                   <div class="form-group mb-3">
@@ -54,16 +111,13 @@ include '../connection/connection.php';
                       placeholder="Contoh: Jl. Merdeka No. 123, Depan SDN 1..." required>
                   </div>
 
-                  <!-- Tanggal & Waktu -->
+                  <!-- Tanggal Kejadian -->
                   <div class="row mb-3">
                     <div class="col-md-6">
                       <label for="tanggal" class="form-label">Tanggal Kejadian</label>
                       <input type="date" class="form-control" id="tanggal" name="tanggal" required>
                     </div>
-                    <div class="col-md-6">
-                      <label for="waktu" class="form-label">Waktu Kejadian</label>
-                      <input type="time" class="form-control" id="waktu" name="waktu" required>
-                    </div>
+
                   </div>
 
                   <!-- Deskripsi -->
@@ -76,7 +130,6 @@ include '../connection/connection.php';
 
                   <!-- Tombol -->
                   <div class="d-flex justify-content-end mt-4">
-                    <button type="reset" class="btn btn-secondary me-2">Batal</button>
                     <button type="submit" name="kirim" class="btn btn-primary">
                       <i class="bi bi-send"></i> Kirim Laporan
                     </button>
@@ -86,7 +139,7 @@ include '../connection/connection.php';
             </div>
             <div class="card shadow rounded-3 mt-3">
               <div class="card-body">
-                
+
 
                 <!-- Tabel Pengaduan -->
                 <div class="table-responsive">
@@ -94,121 +147,94 @@ include '../connection/connection.php';
                     <thead class="table-light text-center">
                       <tr>
                         <th>No</th>
-                        <th>Nama Warga</th>
-                        <th>Lokasi Kejadian</th>
-                        <th>Waktu</th>
                         <th>Tanggal</th>
                         <th>Status Laporan</th>
                         <th>Aksi</th>
                       </tr>
                     </thead>
                     <tbody class="text-center">
-                      <tr>
-                        <td>1</td>
-                        <td>Ahmad Setiawan</td>
-                        <td></td>
-                        <td>Senin</td>
-                        <td>04-11-2025</td>
-                        <td><span class="badge badge-soft text-danger"><i class="fa-solid fa-xmark me-1"></i>Ditolak</span></td>
-                        <td>
-                          <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editJadwalModal">
-                            <i class="fas fa-eye"></i>
-                          </button>
-                          <button class="btn btn-danger btn-sm" onclick="hapusJadwal(1)">
-                            <i class="fas fa-trash-alt"></i>
-                          </button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>Bahlil</td>
-                        <td></td>
-                        <td>Senin</td>
-                        <td>04-11-2025</td>
-                        <td><span class="badge badge-soft text-success"><i class="fa-solid fa-check me-1"></i>Ditolak</span></td>
-                        <td>
-                          <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editJadwalModal">
-                            <i class="fas fa-eye"></i>
-                          </button>
-                          <button class="btn btn-danger btn-sm" onclick="hapusJadwal(1)">
-                            <i class="fas fa-trash-alt"></i>
-                          </button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>3</td>
-                        <td>Ahmad Sahroni</td>
-                        <td></td>
-                        <td>Senin</td>
-                        <td>04-11-2025</td>
-                        <td><span class="badge badge-soft text-primary"><i class="fa-solid fa-clock me-1"></i>Menunggu Validasi</span></td>
-                        <td>
-                          <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editJadwalModal">
-                            <i class="fas fa-eye"></i>
-                          </button>
-                          <button class="btn btn-danger btn-sm" onclick="hapusJadwal(1)">
-                            <i class="fas fa-trash-alt"></i>
-                          </button>
-                        </td>
-                      </tr>
+                      <?php
+                      $id_pengguna = $_SESSION['id_pengguna']; // dari session login
+                      $no = 1;
+
+                      $query = "SELECT * FROM tb_pengaduan_insiden WHERE id_pengguna = '$id_pengguna' ORDER BY id_pengaduan DESC";
+                      $result = mysqli_query($koneksi, $query);
+
+                      if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+
+                          // Format tanggal
+                          $tanggal = date("d-m-Y", strtotime($row['tanggal']));
+
+                          // Badge status
+                          $status = $row['status'];
+                          $badge = "";
+
+                          if ($status == "Ditolak") {
+                            $badge = "<span class='badge badge-soft text-danger'><i class='fa-solid fa-xmark me-1'></i>Ditolak</span>";
+                          } elseif ($status == "Menunggu Validasi") {
+                            $badge = "<span class='badge badge-soft text-primary'><i class='fa-solid fa-clock me-1'></i>Menunggu Validasi</span>";
+                          } elseif ($status == "Diproses") {
+                            $badge = "<span class='badge badge-soft text-warning'><i class='fa-solid fa-spinner me-1'></i>Diproses</span>";
+                          } elseif ($status == "Disetujui") {
+                            $badge = "<span class='badge badge-soft text-success'><i class='fa-solid fa-check me-1'></i>Disetujui</span>";
+                          }
+
+                      ?>
+                          <tr>
+                            <td><?= $no++; ?></td>
+                            <td><?= $tanggal; ?></td>
+                            <td><?= $badge; ?></td>
+                            <td>
+                              <!-- Lihat detail -->
+                              <button
+                                class="btn btn-primary btn-sm"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modalDetail<?= $row['id_pengaduan']; ?>">
+                                <i class="fas fa-eye"></i>
+                              </button>
+
+
+                            </td>
+                          </tr>
+
+                      <?php
+                        }
+                      } else {
+                        echo "<tr><td colspan='4'>Belum ada laporan insiden</td></tr>";
+                      }
+                      ?>
                     </tbody>
+
                   </table>
+
                 </div>
               </div>
 
               <!-- Modal Detai Pengaduan (contoh, strukturnya sama) -->
-              <div class="modal fade" id="editJadwalModal" tabindex="-1" aria-labelledby="editJadwalModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content rounded-3 shadow">
-                    <div class="modal-header bg-primary text-dark">
-                      <h5 class="modal-title" id="editJadwalModalLabel">Detai Pengaduan</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                      <form id="formEditJadwal">
-                        <!-- isian form edit sama seperti tambah -->
-                        <div class="mb-3">
-                          <label class="form-label">Nama Warga</label>
-                          <input type="text" class="form-control" value="Ahmad Setiawan" disabled>
-                        </div>
-                        <div class="mb-3">
-                          <label for="" class="form-label">Alamat</label>
-                          <textarea name="" id="" class="form-control" disabled></textarea>
-                        </div>
-                        <div class="mb-3">
-                          <label class="form-label">Hari</label>
-                          <input type="text" class="form-control" value="Senin" disabled>
-                        </div>
-                        <div class="mb-3">
-                          <label class="form-label">Tanggal</label>
-                          <input type="date" class="form-control" value="2025-11-04" disabled>
-                        </div>
-                      </form>
-                    </div>
+              <?php
+              $result = mysqli_query($koneksi, $query);
+              while ($row = mysqli_fetch_assoc($result)) {
+              ?>
+                <div class="modal fade" id="modalDetail<?= $row['id_pengaduan']; ?>" tabindex="-1">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content rounded-3 shadow">
+                      <div class="modal-header bg-primary text-dark">
+                        <h5 class="modal-title">Detail Pengaduan</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                      </div>
 
+                      <div class="modal-body">
+                        <p><strong>Lokasi:</strong> <?= $row['lokasi']; ?></p>
+                        <p><strong>Tanggal:</strong> <?= date("d-m-Y", strtotime($row['tanggal'])); ?></p>
+                        <p><strong>Deskripsi:</strong><br><?= $row['deskripsi']; ?></p>
+                        <p><strong>Status:</strong> <?= $row['status']; ?></p>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              <?php } ?>
 
-              <!-- Script Hapus -->
-              <script>
-                function hapusJadwal(id) {
-                  Swal.fire({
-                    title: 'Yakin ingin menghapus?',
-                    text: 'Data jadwal akan dihapus permanen!',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#6c757d',
-                    confirmButtonText: 'Ya, Hapus!',
-                    cancelButtonText: 'Batal'
-                  }).then((result) => {
-                    if (result.isConfirmed) {
-                      Swal.fire('Dihapus!', 'Data jadwal berhasil dihapus.', 'success');
-                    }
-                  });
-                }
-              </script>
 
             </div>
           </div>
@@ -232,84 +258,7 @@ include '../connection/connection.php';
   <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
     crossorigin="anonymous"></script>
   <script type="text/javascript" src="../sweetalert/sweetalert2.all.min.js"></script>
-  <!-- data table -->
-  <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
-  <script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap5.js"></script>
-  <script>
-    $(document).ready(function () {
-      $('#tabelSekuriti').DataTable({
-        "language": {
-          "search": "<i class='fa-solid fa-magnifying-glass'></i> ",
-          "lengthMenu": "Tampilkan _MENU_ data per halaman",
-          "zeroRecords": "Data tidak ditemukan",
-          "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-          "infoEmpty": "Tidak ada data tersedia",
-          "infoFiltered": "(disaring dari total _MAX_ data)"
-        },
-        "pageLength": 5,
-        "lengthMenu": [5, 10, 25, 50]
-      });
-    });
 
-    $(document).ready(function () {
-      $('#tabelWarga').DataTable({
-        "language": {
-          "search": "<i class='fa-solid fa-magnifying-glass'></i> ",
-          "lengthMenu": "Tampilkan _MENU_ data per halaman",
-          "zeroRecords": "Data tidak ditemukan",
-          "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-          "infoEmpty": "Tidak ada data tersedia",
-          "infoFiltered": "(disaring dari total _MAX_ data)"
-        },
-        "pageLength": 5,
-        "lengthMenu": [5, 10, 25, 50]
-      });
-    });
-
-    document.getElementById("hapusSekuriti<?= $no - 1 ?>").addEventListener("click", function (event) {
-      event.preventDefault();
-      Swal.fire({
-        title: 'Konfirmasi Hapus',
-        text: "Apakah Anda yakin ingin menghapus akun ini?",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Hapus',
-        cancelButtonText: 'Batal'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire(
-            'Dihapus!',
-            'Data telah dihapus.',
-            'success'
-          )
-        }
-      });
-    });
-
-    document.getElementById("hapusWarga<?= $no - 1 ?>").addEventListener("click", function (event) {
-      event.preventDefault();
-      Swal.fire({
-        title: 'Konfirmasi Hapus',
-        text: "Apakah Anda yakin ingin menghapus akun ini?",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Hapus',
-        cancelButtonText: 'Batal'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire(
-            'Dihapus!',
-            'Data telah dihapus.',
-            'success'
-          )
-        }
-      });
-    });
-  </script>
 </body>
 
 </html>
