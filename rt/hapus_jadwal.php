@@ -16,7 +16,7 @@ $query = mysqli_query(
 
 if ($query) {
     echo "<script>
-        alert('Jadwal & detail berhasil dihapus');
+        alert('Jadwal berhasil dihapus');
         window.location='kelola-jadwal.php';
     </script>";
 } else {

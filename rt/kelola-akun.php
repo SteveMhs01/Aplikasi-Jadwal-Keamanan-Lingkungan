@@ -102,7 +102,7 @@ include 'sideandnav/sidebar.php';
     unset($_SESSION['sukses_update']);
   }
 
-  // tampilkan SweetAlert jika sukses update akun
+  // tampilkan SweetAlert jika sukses delete akun
   if (isset($_SESSION['sukses_delete'])) {
     echo "
     <script>

@@ -40,9 +40,16 @@
 
     // cek username
     $stmt = $koneksi->prepare("SELECT * FROM tb_pengguna WHERE nik = ?");
+    /* Fungsi: Menyiapkan query SQL aman menggunakan prepared statement
+        Tanda ? adalah placeholder untuk parameter
+        Query belum dijalankan, baru disiapkan */
     $stmt->bind_param("s", $nik);
+    /* Fungsi: Mengikat parameter ke placeholder
+        "s" menunjukkan tipe data string untuk $nik */
     $stmt->execute();
+    /* Fungsi: Menjalankan query yang telah disiapkan */
     $result = $stmt->get_result();
+    /* Fungsi: Mendapatkan hasil query */
 
     if ($result->num_rows === 1) {
 
