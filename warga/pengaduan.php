@@ -30,9 +30,9 @@ if (isset($_POST['kirim'])) {
 
   $insert = mysqli_query($koneksi, "
     INSERT INTO tb_pengaduan_insiden
-    (id_pengguna, nama, lokasi, tanggal, deskripsi, status)
+    (id_pengguna, lokasi, tanggal, deskripsi, status)
     VALUES
-    ('$id_pengguna','$nama','$lokasi','$tanggal','$deskripsi','diproses')
+    ('$id_pengguna','$lokasi','$tanggal','$deskripsi','diproses')
   ");
 
   if ($insert) {
@@ -99,7 +99,7 @@ $laporan = mysqli_query($koneksi, "
                 <form method="POST">
                   <div class="mb-3">
                     <label>Lokasi Kejadian</label>
-                    <input type="text" name="lokasi" class="form-control" required>
+                    <input type="text" name="lokasi" class="form-control" placeholder="Contoh. Jl. Merdeka No 123" required>
                   </div>
 
                   <div class="mb-3">
@@ -109,7 +109,7 @@ $laporan = mysqli_query($koneksi, "
 
                   <div class="mb-3">
                     <label>Deskripsi Insiden</label>
-                    <textarea name="deskripsi" class="form-control" rows="4" required></textarea>
+                    <textarea name="deskripsi" class="form-control" placeholder="Jelaskan secara detail apa yang terjadi, kronologi kejadian,pihak yang terlibat, dan kondisi terkini" rows="4" required></textarea>
                   </div>
 
                   <div class="text-end">
@@ -136,7 +136,7 @@ $laporan = mysqli_query($koneksi, "
 
                   <tbody>
                     <?php
-                    $limit = 10;
+                    $limit = 4;
                     $page  = isset($_GET['page']) ? (int)$_GET['page'] : 1;
                     $start = ($page - 1) * $limit;
 
@@ -146,10 +146,19 @@ $laporan = mysqli_query($koneksi, "
 
                     $totalPage = ceil($totalData / $limit);
                     $laporan = mysqli_query($koneksi, "
-                    SELECT * FROM tb_pengaduan_insiden
-                    WHERE id_pengguna='$id_pengguna'
-                    ORDER BY id_pengaduan DESC
-                    LIMIT $start, $limit
+SELECT 
+  p.id_pengaduan,
+  p.lokasi,
+  p.tanggal,
+  p.deskripsi,
+  p.status,
+  u.nama
+FROM tb_pengaduan_insiden p
+JOIN tb_pengguna u ON p.id_pengguna = u.id_pengguna
+WHERE p.id_pengguna='$id_pengguna'
+ORDER BY p.id_pengaduan DESC
+LIMIT $start, $limit
+
                   ");
                     ?>
 
@@ -210,11 +219,67 @@ $laporan = mysqli_query($koneksi, "
                       <button class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                      <p><b>Lokasi:</b> <?= $row['lokasi'] ?></p>
-                      <p><b>Tanggal:</b> <?= date('d-m-Y', strtotime($row['tanggal'])) ?></p>
-                      <p><b>Status:</b> <?= ucfirst($row['status']) ?></p>
-                      <p><b>Deskripsi:</b><br><?= $row['deskripsi'] ?></p>
+                      <div class="row g-3">
+
+                        <!-- Nama -->
+                        <div class="col-md-6">
+                          <label class="form-label">Nama</label>
+                          <div class="input-group">
+                            <span class="input-group-text">
+                              <i class="fa-solid fa-user"></i>
+                            </span>
+                            <input type="text" class="form-control" value="<?= $row['nama'] ?>" readonly>
+                          </div>
+                        </div>
+
+                        <!-- Status -->
+                        <div class="col-md-6">
+                          <label class="form-label">Status</label>
+                          <div class="input-group">
+                            <span class="input-group-text">
+                              <i class="fa-solid fa-clock"></i>
+                            </span>
+                            <input type="text" class="form-control" value="<?= ucfirst($row['status']) ?>" readonly>
+                          </div>
+                        </div>
+
+                        <!-- Tanggal -->
+                        <div class="col-md-6">
+                          <label class="form-label">Tanggal</label>
+                          <div class="input-group">
+                            <span class="input-group-text">
+                              <i class="fa-solid fa-calendar"></i>
+                            </span>
+                            <input type="text" class="form-control"
+                              value="<?= date('Y-m-d', strtotime($row['tanggal'])) ?>" readonly>
+                          </div>
+                        </div>
+
+                        <!-- Lokasi -->
+                        <div class="col-md-6">
+                          <label class="form-label">Lokasi Kejadian</label>
+                          <div class="input-group">
+                            <span class="input-group-text">
+                              <i class="fa-solid fa-location-dot"></i>
+                            </span>
+                            <input type="text" class="form-control" value="<?= $row['lokasi'] ?>" readonly>
+                          </div>
+                        </div>
+
+                        <!-- Deskripsi -->
+                        <div class="col-12">
+                          <label class="form-label">Deskripsi</label>
+                          <div class="input-group">
+                            <span class="input-group-text">
+                              <i class="fa-solid fa-file-lines"></i>
+                            </span>
+                            <textarea class="form-control" rows="6" readonly><?= $row['deskripsi'] ?></textarea>
+                          </div>
+                        </div>
+
+                      </div>
                     </div>
+
                   </div>
                 </div>
               </div>

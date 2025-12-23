@@ -30,9 +30,9 @@ if (isset($_POST['kirim'])) {
 
   $insert = mysqli_query($koneksi, "
     INSERT INTO tb_pengaduan_insiden
-    (id_pengguna, nama, lokasi, tanggal, deskripsi, status)
+    (id_pengguna, lokasi, tanggal, deskripsi, status)
     VALUES
-    ('$id_pengguna','$nama','$lokasi','$tanggal','$deskripsi','diproses')
+    ('$id_pengguna','$lokasi','$tanggal','$deskripsi','diproses')
   ");
 
   if ($insert) {
@@ -146,10 +146,19 @@ $laporan = mysqli_query($koneksi, "
 
                     $totalPage = ceil($totalData / $limit);
                     $laporan = mysqli_query($koneksi, "
-                    SELECT * FROM tb_pengaduan_insiden
-                    WHERE id_pengguna='$id_pengguna'
-                    ORDER BY id_pengaduan DESC
-                    LIMIT $start, $limit
+SELECT 
+  p.id_pengaduan,
+  p.lokasi,
+  p.tanggal,
+  p.deskripsi,
+  p.status,
+  u.nama
+FROM tb_pengaduan_insiden p
+JOIN tb_pengguna u ON p.id_pengguna = u.id_pengguna
+WHERE p.id_pengguna='$id_pengguna'
+ORDER BY p.id_pengaduan DESC
+LIMIT $start, $limit
+
                   ");
                     ?>
 
