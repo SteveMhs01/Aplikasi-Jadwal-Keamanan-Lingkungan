@@ -170,7 +170,20 @@
               </div>
             </div>
           </div>
+          <?php
+          $tanggal_hari_ini = date('Y-m-d');
 
+          $query = mysqli_query($koneksi, "
+            SELECT 
+              p.nama,
+              jd.jam_masuk
+            FROM tb_jadwal j
+            JOIN tb_jadwal_detail jd ON j.id_jadwal = jd.id_jadwal
+            JOIN tb_pengguna p ON jd.id_pengguna = p.id_pengguna
+            WHERE j.tanggal = '$tanggal_hari_ini'
+          ");
+
+          ?>
           <!-- Tabel Jaga Ronda -->
           <div class="card mb-4 shadow">
             <div class="card-body">
@@ -179,27 +192,26 @@
                 <thead class="table-light">
                   <tr>
                     <th>Nama</th>
-                    <th>Shift</th>
-                    <th>Status</th>
+                    <th>Jam Masuk</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>Aldo</td>
-                    <td>Malam (22:00 - 02:00)</td>
-                    <td><span class="badge text-success">Hadir</span></td>
-                  </tr>
-                  <tr>
-                    <td>Bima</td>
-                    <td>Malam (02:00 - 06:00)</td>
-                    <td><span class="badge text-success">Hadir</span></td>
-                  </tr>
-                  <tr>
-                    <td>Citra</td>
-                    <td>Sore (18:00 - 22:00)</td>
-                    <td><span class="badge text-danger">Tidak Hadir</span></td>
-                  </tr>
+                  <?php if (mysqli_num_rows($query) > 0) { ?>
+                    <?php while ($row = mysqli_fetch_assoc($query)) { ?>
+                      <tr>
+                        <td><?= htmlspecialchars($row['nama']); ?></td>
+                        <td><?= date('H:i', strtotime($row['jam_masuk'])); ?></td>
+                      </tr>
+                    <?php } ?>
+                  <?php } else { ?>
+                    <tr>
+                      <td colspan="3" class="text-center text-muted">
+                        Tidak ada jadwal jaga hari ini
+                      </td>
+                    </tr>
+                  <?php } ?>
                 </tbody>
+
               </table>
             </div>
           </div>

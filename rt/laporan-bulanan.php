@@ -60,7 +60,7 @@ $proses = mysqli_fetch_assoc(mysqli_query(
 // === DATA TABEL ===
 $dataLaporan = mysqli_query(
   $koneksi,
-  "SELECT * FROM tb_pengaduan_insiden $where ORDER BY tanggal DESC LIMIT 10"
+  "SELECT *,u.nama FROM tb_pengaduan_insiden p join tb_pengguna u ON p.id_pengguna = u.id_pengguna $where ORDER BY tanggal DESC LIMIT 10"
 );
 
 ?>

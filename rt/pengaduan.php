@@ -221,14 +221,16 @@
 
           <!-- Daftar Laporan -->
           <?php
-          $query = mysqli_query($koneksi, "SELECT * FROM tb_pengaduan_insiden ORDER BY id_pengaduan DESC");
+          $query = mysqli_query($koneksi, "SELECT *,u.nama FROM tb_pengaduan_insiden p join tb_pengguna u ON p.id_pengguna = u.id_pengguna  ORDER BY id_pengaduan DESC");
 
           while ($row = mysqli_fetch_assoc($query)) {
             $badge = ($row['status'] == 'diproses') ? 'badge-waiting' : (($row['status'] == 'diterima') ? 'badge-success' : 'badge-danger');
 
             $statusText = ucfirst($row['status']);
           ?>
-            <div class="card mb-3 p-3 card-laporan shadow laporan-item" id="laporan-<?= $row['id_pengaduan'] ?>">
+            <div class="card mb-3 p-3 card-laporan shadow laporan-item"
+              id="laporan-<?= $row['id_pengaduan'] ?>"
+              data-tanggal="<?= $row['tanggal'] ?>">
               <div class="d-flex justify-content-between align-items-start">
                 <div>
                   <div class="text-muted small mb-2">
@@ -462,46 +464,49 @@
     }
 
     // FILTER BULAN
-    document.getElementById("filterBulan").addEventListener("change", function() {
-      let bulan = this.value;
-      let laporan = document.querySelectorAll(".laporan-item");
+      document.getElementById("filterBulan").addEventListener("change", function() {
+        const bulan = this.value; // contoh: "-12-"
+        const laporan = document.querySelectorAll(".laporan-item");
 
-      laporan.forEach(l => {
-        let tanggal = l.innerText;
-        l.style.display = tanggal.includes(bulan) ? "" : "none";
+        laporan.forEach(item => {
+          const tanggal = item.getAttribute("data-tanggal"); // YYYY-MM-DD
 
-        if (bulan === "") l.style.display = "";
+          if (!bulan) {
+            item.style.display = "";
+          } else {
+            item.style.display = tanggal.includes(bulan) ? "" : "none";
+          }
+        });
       });
-    });
 
-    // Modal Detail
-    document.querySelectorAll(".modalDetail").forEach(btn => {
-      btn.addEventListener("click", function() {
-        const statusMap = {
-          'diproses': 'Menunggu Tervalidasi',
-          'diterima': 'Tervalidasi',
-          'ditolak': 'Ditolak'
-        };
+  // Modal Detail
+  document.querySelectorAll(".modalDetail").forEach(btn => {
+  btn.addEventListener("click", function() {
+  const statusMap = {
+  'diproses': 'Menunggu Tervalidasi',
+  'diterima': 'Tervalidasi',
+  'ditolak': 'Ditolak'
+  };
 
-        document.getElementById("id").value = this.dataset.id;
-        document.getElementById("nama").value = this.dataset.nama;
-        document.getElementById("deskripsi").value = this.dataset.deskripsi;
-        document.getElementById("tanggal").value = this.dataset.tanggal;
-        document.getElementById("lokasi").value = this.dataset.lokasi;
-        document.getElementById("status").value = statusMap[this.dataset.status] || this.dataset.status;
+  document.getElementById("id").value = this.dataset.id;
+  document.getElementById("nama").value = this.dataset.nama;
+  document.getElementById("deskripsi").value = this.dataset.deskripsi;
+  document.getElementById("tanggal").value = this.dataset.tanggal;
+  document.getElementById("lokasi").value = this.dataset.lokasi;
+  document.getElementById("status").value = statusMap[this.dataset.status] || this.dataset.status;
 
-        // Tambahkan atribut readonly pada input modal
-        document.getElementById("nama").setAttribute('readonly', true);
-        document.getElementById("tanggal").setAttribute('readonly', true);
-        document.getElementById("status").setAttribute('readonly', true);
-        document.getElementById("deskripsi").setAttribute('readonly', true);
-        document.getElementById("lokasi").setAttribute('readonly', true);
-        const modal = new bootstrap.Modal(
-          document.getElementById("modalDetailPengaduan")
-        );
-        modal.show();
-      });
-    });
+  // Tambahkan atribut readonly pada input modal
+  document.getElementById("nama").setAttribute('readonly', true);
+  document.getElementById("tanggal").setAttribute('readonly', true);
+  document.getElementById("status").setAttribute('readonly', true);
+  document.getElementById("deskripsi").setAttribute('readonly', true);
+  document.getElementById("lokasi").setAttribute('readonly', true);
+  const modal = new bootstrap.Modal(
+  document.getElementById("modalDetailPengaduan")
+  );
+  modal.show();
+  });
+  });
   </script>
 
 </body>
