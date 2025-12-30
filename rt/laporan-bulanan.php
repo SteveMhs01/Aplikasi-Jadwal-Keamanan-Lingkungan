@@ -125,7 +125,7 @@ $dataLaporan = mysqli_query(
               <h6 class="fw-semibold mb-3">Data Insiden Terbaru</h6>
 
               <div class="table-responsive">
-                <table class="table table-hover align-middle">
+                <table class="table table-hover align-middle" id="rondaTable">
                   <thead class="table-light">
                     <tr>
                       <th>Nama Pelapor</th>
@@ -154,6 +154,12 @@ $dataLaporan = mysqli_query(
                     <?php } ?>
                   </tbody>
                 </table>
+                <div class="d-flex justify-content-between align-items-center mt-2">
+                  <div id="tableInfo" class="text-muted small"></div>
+                  <nav>
+                    <ul id="pagination" class="pagination mb-0"></ul>
+                  </nav>
+                </div>
               </div>
             </div>
 
@@ -310,6 +316,71 @@ $dataLaporan = mysqli_query(
         }]
       }
     });
+  </script>
+  <script>
+    const rowsPerPage = 5;
+    const table = document.getElementById("rondaTable");
+    const tbody = table.querySelector("tbody");
+    const rows = Array.from(tbody.querySelectorAll("tr"));
+    const pagination = document.getElementById("pagination");
+    const tableInfo = document.getElementById("tableInfo");
+
+    let currentPage = 1;
+    const totalPages = Math.ceil(rows.length / rowsPerPage);
+
+    function showPage(page) {
+      tbody.innerHTML = "";
+      const start = (page - 1) * rowsPerPage;
+      const end = Math.min(start + rowsPerPage, rows.length);
+
+      rows.slice(start, end).forEach(row => tbody.appendChild(row));
+
+      tableInfo.textContent =
+        `Menampilkan ${start + 1} sampai ${end} dari ${rows.length} data`;
+    }
+
+    function pageItem(label, page, disabled = false, active = false) {
+      const li = document.createElement("li");
+      li.className = "page-item";
+      if (disabled) li.classList.add("disabled");
+      if (active) li.classList.add("active");
+
+      const a = document.createElement("a");
+      a.className = "page-link";
+      a.href = "#";
+      a.textContent = label;
+
+      a.onclick = (e) => {
+        e.preventDefault();
+        if (!disabled && !active) {
+          currentPage = page;
+          updatePagination();
+        }
+      };
+
+      li.appendChild(a);
+      return li;
+    }
+
+    function updatePagination() {
+      pagination.innerHTML = "";
+
+      pagination.appendChild(pageItem("Awal", 1, currentPage === 1));
+      pagination.appendChild(pageItem("‹", currentPage - 1, currentPage === 1));
+
+      for (let i = 1; i <= totalPages; i++) {
+        pagination.appendChild(
+          pageItem(i, i, false, i === currentPage)
+        );
+      }
+
+      pagination.appendChild(pageItem("›", currentPage + 1, currentPage === totalPages));
+      pagination.appendChild(pageItem("Akhir", totalPages, currentPage === totalPages));
+
+      showPage(currentPage);
+    }
+
+    updatePagination();
   </script>
 
 </body>

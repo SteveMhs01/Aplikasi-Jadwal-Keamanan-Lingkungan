@@ -188,7 +188,7 @@
           <div class="card mb-4 shadow">
             <div class="card-body">
               <h5 class="mb-3">📋 Jadwal Jaga Hari Ini</h5>
-              <table id="rondaTable" class="table table-sm align-middle">
+              <table class="table table-sm align-middle">
                 <thead class="table-light">
                   <tr>
                     <th>Nama</th>
@@ -213,13 +213,6 @@
                 </tbody>
 
               </table>
-              <div class="d-flex justify-content-between align-items-center mt-2">
-                <div id="tableInfo" class="text-muted small"></div>
-                <nav>
-                  <ul id="pagination" class="pagination mb-0"></ul>
-                </nav>
-              </div>
-
             </div>
           </div>
           <div class="row g-4">
@@ -334,71 +327,7 @@
       },
     });
   </script>
-<script>
-  const rowsPerPage = 10;
-  const table = document.getElementById("rondaTable");
-  const tbody = table.querySelector("tbody");
-  const rows = Array.from(tbody.querySelectorAll("tr"));
-  const pagination = document.getElementById("pagination");
-  const tableInfo = document.getElementById("tableInfo");
 
-  let currentPage = 1;
-  const totalPages = Math.ceil(rows.length / rowsPerPage);
-
-  function showPage(page) {
-    tbody.innerHTML = "";
-    const start = (page - 1) * rowsPerPage;
-    const end = Math.min(start + rowsPerPage, rows.length);
-
-    rows.slice(start, end).forEach(row => tbody.appendChild(row));
-
-    tableInfo.textContent =
-      `Menampilkan ${start + 1} sampai ${end} dari ${rows.length} data`;
-  }
-
-  function pageItem(label, page, disabled = false, active = false) {
-    const li = document.createElement("li");
-    li.className = "page-item";
-    if (disabled) li.classList.add("disabled");
-    if (active) li.classList.add("active");
-
-    const a = document.createElement("a");
-    a.className = "page-link";
-    a.href = "#";
-    a.textContent = label;
-
-    a.onclick = (e) => {
-      e.preventDefault();
-      if (!disabled && !active) {
-        currentPage = page;
-        updatePagination();
-      }
-    };
-
-    li.appendChild(a);
-    return li;
-  }
-
-  function updatePagination() {
-    pagination.innerHTML = "";
-
-    pagination.appendChild(pageItem("Awal", 1, currentPage === 1));
-    pagination.appendChild(pageItem("‹", currentPage - 1, currentPage === 1));
-
-    for (let i = 1; i <= totalPages; i++) {
-      pagination.appendChild(
-        pageItem(i, i, false, i === currentPage)
-      );
-    }
-
-    pagination.appendChild(pageItem("›", currentPage + 1, currentPage === totalPages));
-    pagination.appendChild(pageItem("Akhir", totalPages, currentPage === totalPages));
-
-    showPage(currentPage);
-  }
-
-  updatePagination();
-</script>
 
 </body>
 
