@@ -204,7 +204,7 @@
         <!-- card 1 -->
         <div class="col-md-3 col-sm-6 animate__animated animate__fadeIn">
           <div class="card">
-            <img src="https://cdn.kibrispdr.org/data/397/gambar-kartun-ronda-malam-1.jpg" alt="">
+            <img src="./img/img11.jpg" class="img-fluid rounded shadow animate__animated animate__fadeIn" alt="">
             <div class="card-body">
               <h6 class="fw-semibold">Ronda Malam Warga</h6>
               <p class="small">Kegiatan rutin menjaga keamanan lingkungan setiap malam.</p>
@@ -215,7 +215,7 @@
         <!-- card 2 -->
         <div class="col-md-3 col-sm-6 animate__animated animate__fadeIn">
           <div class="card">
-            <img src="https://cdn.kibrispdr.org/data/5/animasi-masyarakat-desa-0.jpg" alt="">
+            <img src="./img/img22.jpg" class="img-fluid rounded shadow animate__animated animate__fadeIn" alt="">
             <div class="card-body">
               <h6 class="fw-semibold">Koordinasi Warga</h6>
               <p class="small">Menjalin komunikasi efektif antarwarga dan pengurus.</p>
@@ -226,7 +226,7 @@
         <!-- card 3 -->
         <div class="col-md-3 col-sm-6 animate__animated animate__fadeIn">
           <div class="card">
-            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_x4yuxa_8641.png" alt="">
+            <img src="./img/img33.png" class="img-fluid rounded shadow animate__animated animate__fadeIn" alt="">
             <div class="card-body">
               <h6 class="fw-semibold">Kegiatan Sosial</h6>
               <p class="small">Membangun solidaritas dan semangat gotong royong.</p>
@@ -237,7 +237,7 @@
         <!-- card 4 -->
         <div class="col-md-3 col-sm-6 animate__animated animate__fadeIn">
           <div class="card">
-            <img src="https://i.ytimg.com/vi/Tbi4wZjcwrY/hqdefault.jpg" alt="">
+            <img src="./img/img44.jpg" class="img-fluid rounded shadow animate__animated animate__fadeIn" alt="">
             <div class="card-body">
               <h6 class="fw-semibold">Sinergi dengan Aparat</h6>
               <p class="small">Berkoordinasi dengan pihak keamanan setempat.</p>
