@@ -267,12 +267,12 @@
             </div>
 
           <?php } ?>
-<div class="d-flex justify-content-between align-items-center mt-3">
-  <div id="laporanInfo" class="text-muted small"></div>
-  <nav>
-    <ul id="laporanPagination" class="pagination mb-0"></ul>
-  </nav>
-</div>
+          <div class="d-flex justify-content-between align-items-center mt-3">
+            <div id="laporanInfo" class="text-muted small"></div>
+            <nav>
+              <ul id="laporanPagination" class="pagination mb-0"></ul>
+            </nav>
+          </div>
 
           <!-- MODAL DETAIL PENGADUAN -->
           <div class="modal fade" id="modalDetailPengaduan" tabindex="-1">
@@ -470,114 +470,115 @@
     }
 
     // FILTER BULAN
-      document.getElementById("filterBulan").addEventListener("change", function() {
-        const bulan = this.value; // contoh: "-12-"
-        const laporan = document.querySelectorAll(".laporan-item");
+    document.getElementById("filterBulan").addEventListener("change", function() {
+      const bulan = this.value; // contoh: "-12-"
+      const laporan = document.querySelectorAll(".laporan-item");
 
-        laporan.forEach(item => {
-          const tanggal = item.getAttribute("data-tanggal"); // YYYY-MM-DD
+      laporan.forEach(item => {
+        const tanggal = item.getAttribute("data-tanggal"); // YYYY-MM-DD
 
-          if (!bulan) {
-            item.style.display = "";
-          } else {
-            item.style.display = tanggal.includes(bulan) ? "" : "none";
-          }
-        });
+        if (!bulan) {
+          item.style.display = "";
+        } else {
+          item.style.display = tanggal.includes(bulan) ? "" : "none";
+        }
       });
+    });
 
-  // Modal Detail
-  document.querySelectorAll(".modalDetail").forEach(btn => {
-  btn.addEventListener("click", function() {
-  const statusMap = {
-  'diproses': 'Menunggu Tervalidasi',
-  'diterima': 'Tervalidasi',
-  'ditolak': 'Ditolak'
-  };
+    // Modal Detail
+    document.querySelectorAll(".modalDetail").forEach(btn => {
+      btn.addEventListener("click", function() {
+        const statusMap = {
+          'diproses': 'Menunggu Tervalidasi',
+          'diterima': 'Tervalidasi',
+          'ditolak': 'Ditolak'
+        };
 
-  document.getElementById("id").value = this.dataset.id;
-  document.getElementById("nama").value = this.dataset.nama;
-  document.getElementById("deskripsi").value = this.dataset.deskripsi;
-  document.getElementById("tanggal").value = this.dataset.tanggal;
-  document.getElementById("lokasi").value = this.dataset.lokasi;
-  document.getElementById("status").value = statusMap[this.dataset.status] || this.dataset.status;
+        document.getElementById("id").value = this.dataset.id;
+        document.getElementById("nama").value = this.dataset.nama;
+        document.getElementById("deskripsi").value = this.dataset.deskripsi;
+        document.getElementById("tanggal").value = this.dataset.tanggal;
+        document.getElementById("lokasi").value = this.dataset.lokasi;
+        document.getElementById("status").value = statusMap[this.dataset.status] || this.dataset.status;
 
-  // Tambahkan atribut readonly pada input modal
-  document.getElementById("nama").setAttribute('readonly', true);
-  document.getElementById("tanggal").setAttribute('readonly', true);
-  document.getElementById("status").setAttribute('readonly', true);
-  document.getElementById("deskripsi").setAttribute('readonly', true);
-  document.getElementById("lokasi").setAttribute('readonly', true);
-  const modal = new bootstrap.Modal(
-  document.getElementById("modalDetailPengaduan")
-  );
-  modal.show();
-  });
-  });
+        // Tambahkan atribut readonly pada input modal
+        document.getElementById("nama").setAttribute('readonly', true);
+        document.getElementById("tanggal").setAttribute('readonly', true);
+        document.getElementById("status").setAttribute('readonly', true);
+        document.getElementById("deskripsi").setAttribute('readonly', true);
+        document.getElementById("lokasi").setAttribute('readonly', true);
+        const modal = new bootstrap.Modal(
+          document.getElementById("modalDetailPengaduan")
+        );
+        modal.show();
+      });
+    });
   </script>
-<script>
-  const itemsPerPage = 5;
-  const items = Array.from(document.querySelectorAll(".laporan-item"));
-  const info = document.getElementById("laporanInfo");
-  const pagination = document.getElementById("laporanPagination");
+  <script>
+    // paginasi laporan
+    const itemsPerPage = 5;
+    const items = Array.from(document.querySelectorAll(".laporan-item"));
+    const info = document.getElementById("laporanInfo");
+    const pagination = document.getElementById("laporanPagination");
 
-  let currentPage = 1;
-  const totalPages = Math.ceil(items.length / itemsPerPage);
+    let currentPage = 1;
+    const totalPages = Math.ceil(items.length / itemsPerPage);
 
-  function showPage(page) {
-    items.forEach(i => i.style.display = "none");
+    function showPage(page) {
+      items.forEach(i => i.style.display = "none");
 
-    const start = (page - 1) * itemsPerPage;
-    const end = Math.min(start + itemsPerPage, items.length);
+      const start = (page - 1) * itemsPerPage;
+      const end = Math.min(start + itemsPerPage, items.length);
 
-    for (let i = start; i < end; i++) {
-      items[i].style.display = "";
-    }
-
-    info.textContent =
-      `Menampilkan ${start + 1} sampai ${end} dari ${items.length} data`;
-  }
-
-  function btn(label, page, disabled = false, active = false) {
-    const li = document.createElement("li");
-    li.className = "page-item";
-    if (disabled) li.classList.add("disabled");
-    if (active) li.classList.add("active");
-
-    const a = document.createElement("a");
-    a.className = "page-link";
-    a.href = "#";
-    a.textContent = label;
-
-    a.onclick = e => {
-      e.preventDefault();
-      if (!disabled && !active) {
-        currentPage = page;
-        render();
+      for (let i = start; i < end; i++) {
+        items[i].style.display = "";
       }
-    };
 
-    li.appendChild(a);
-    return li;
-  }
-
-  function render() {
-    pagination.innerHTML = "";
-
-    pagination.appendChild(btn("Awal", 1, currentPage === 1));
-    pagination.appendChild(btn("‹", currentPage - 1, currentPage === 1));
-
-    for (let i = 1; i <= totalPages; i++) {
-      pagination.appendChild(btn(i, i, false, i === currentPage));
+      info.textContent =
+        `Menampilkan ${start + 1} sampai ${end} dari ${items.length} data`;
     }
 
-    pagination.appendChild(btn("›", currentPage + 1, currentPage === totalPages));
-    pagination.appendChild(btn("Akhir", totalPages, currentPage === totalPages));
+    function btn(label, page, disabled = false, active = false) {
+      const li = document.createElement("li");
+      li.className = "page-item";
+      if (disabled) li.classList.add("disabled");
+      if (active) li.classList.add("active");
 
-    showPage(currentPage);
-  }
+      const a = document.createElement("a");
+      a.className = "page-link";
+      a.href = "#";
+      a.textContent = label;
 
-  render();
-</script>
+      a.onclick = e => {
+        e.preventDefault();
+        if (!disabled && !active) {
+          currentPage = page;
+          render();
+        }
+      };
+
+      li.appendChild(a);
+      return li;
+    }
+
+    function render() {
+      pagination.innerHTML = "";
+
+      pagination.appendChild(btn("Awal", 1, currentPage === 1));
+      pagination.appendChild(btn("‹", currentPage - 1, currentPage === 1));
+
+      for (let i = 1; i <= totalPages; i++) {
+        pagination.appendChild(btn(i, i, false, i === currentPage));
+      }
+
+      pagination.appendChild(btn("›", currentPage + 1, currentPage === totalPages));
+      pagination.appendChild(btn("Akhir", totalPages, currentPage === totalPages));
+
+      showPage(currentPage);
+    }
+
+    render();
+  </script>
 
 </body>
 
